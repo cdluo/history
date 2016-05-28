@@ -14,6 +14,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
+import java.util.Timer;
 import java.util.TreeSet;
 import java.util.regex.Pattern;
 
@@ -21,6 +22,8 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
+import com.kirisoul.cs.history.world.Time;
+import com.kirisoul.cs.history.world.World;
 
 import joptsimple.OptionParser;
 import joptsimple.OptionSet;
@@ -44,6 +47,11 @@ public class Main {
 
   private String[] args;
   private File db;
+  private World world;
+  private Time time;
+  private Timer timer;
+  private static final int DELAY = 1500;
+  private static final int SECOND = 1000;
 
   private Main(String[] args) {
     this.args = args;
@@ -53,19 +61,19 @@ public class Main {
     OptionParser parser = new OptionParser();
 
     parser.accepts("gui");
-    OptionSpec<File> fileSpec = parser.nonOptions().ofType(File.class);
     OptionSet options = parser.parse(args);
-
-    db = options.valueOf(fileSpec);
-    if (db == null) {
-      System.out.println("ERROR: Please specify a star file");
-      System.exit(1);
-    }
 
     if (options.has("gui")) {
       runSparkServer();
     } else {
-      // Process commands
+      // Terminal Version
+      timer = new Timer();
+      world = new World();
+      time = new Time(world);
+      
+      world.addNation("US", 300);
+      world.addNation("China", 1000);
+      timer.schedule(time, DELAY, SECOND);
     }
   }
 

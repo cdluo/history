@@ -37,6 +37,6 @@ PROJECT=$(basename $(pwd))
 
 #cp /course/cs032/data/bacon/bacon.sqlite3 /ltmp/
 
-java -cp $TARGET:$CP edu.brown.cs.$USER.$PROJECT.Main "$@"
+java -cp $TARGET:$CP com.kirisoul.cs.$PROJECT.Main "$@"
 
 #rm /ltmp/bacon.sqlite3
