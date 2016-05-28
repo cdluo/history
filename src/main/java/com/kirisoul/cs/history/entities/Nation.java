@@ -1,29 +1,24 @@
 package com.kirisoul.cs.history.entities;
 
 /**
- * Represents a nation
+ * Does not represent a nation, but rather a set 
+ * of changes that can occur in a nation.
  * @author ChrisLuo
  */
+
 public class Nation {
 
-  private String name;
-  private int pop;
-
-  public Nation(String name1, int pop1) {
-    name = name1;
-    pop = pop1;
-  }
-
-  public void growPop() {
-    int growth = (int) Math.round((Math.random()*10));
-    pop = pop + growth;
+  public Nation(){
+    
   }
   
-  public int getPop(){
-    return pop;
+  public int growPop(int pop){
+    int newPop = pop+ (int) (Math.random()*10);
+    return newPop;
   }
   
-  public String toString(){
-    return name + "|Population: " + String.valueOf(pop);
+  public int growGdp(int gdp){
+    int newGdp = gdp + (int) (Math.random()*10);
+    return newGdp;
   }
 }

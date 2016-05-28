@@ -1,5 +1,6 @@
 package com.kirisoul.cs.history.world;
 
+import java.sql.SQLException;
 import java.util.TimerTask;
 
 public class Time extends TimerTask{
@@ -12,6 +13,11 @@ public class Time extends TimerTask{
 
   @Override
   public void run() {
-    world.passTime();
+    try {
+      world.passTime();
+    } catch (SQLException e) {
+      System.out.println("SQLException");
+      e.printStackTrace();
+    }
   }
 }
