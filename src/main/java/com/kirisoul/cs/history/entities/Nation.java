@@ -8,17 +8,33 @@ package com.kirisoul.cs.history.entities;
 
 public class Nation {
 
-  public Nation(){
-    
+  private String name;
+  private int pop;
+  private int gdp;
+  
+  public Nation(String name1, int pop1, int gdp1){
+    name = name1;
+    pop=pop1;
+    gdp=gdp1;
   }
   
-  public int growPop(int pop){
-    int newPop = pop+ (int) (Math.random()*10);
-    return newPop;
+  public void growPop(){
+    pop += (int) (Math.random()*10);
   }
   
-  public int growGdp(int gdp){
-    int newGdp = gdp + (int) (Math.random()*10);
-    return newGdp;
+  public void growGdp(){
+    gdp += (int) (Math.random()*10);
+  }
+  
+  public String getName(){
+    return name;
+  }
+  
+  public int getPop(){
+    return pop;
+  }
+  
+  public int getGdp(){
+    return gdp;
   }
 }

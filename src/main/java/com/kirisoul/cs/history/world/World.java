@@ -15,28 +15,70 @@ import com.kirisoul.cs.history.entities.Nation;
 public class World {
 
   private SQLQuery query;
-  private List<String> nations;
-  private Nation nation;
+  private List<Nation> nations;
   
+  /**
+   * Constructor
+   * @param db the sqlite database
+   * @throws ClassNotFoundException exception
+   * @throws SQLException exception
+   */
   public World(String db) throws ClassNotFoundException, SQLException{
     query = new SQLQuery(db);
-    nations = query.getNationNames();
-    nation = new Nation();
+    nations = buildNations();
   }
   
-  public void addNation(String name, int pop, int gdp) throws SQLException{
+  /**
+   * Adds a nation to both the sqlite database and our local nation list.
+   * @param name of the nation
+   * @param gdp of the nation
+   * @param pop of the nation
+   * @throws SQLException exception
+   */
+  public void addNation(String name, int gdp, int pop) throws SQLException{
     query.addNation(name, pop, gdp);
+    Nation added = new Nation(name, pop, gdp);
+    nations.add(added);
   }
   
+  /**
+   * Passes time
+   * @throws SQLException exception
+   */
   public void passTime() throws SQLException{
-    for(String n: nations){
-      int newPop = nation.growPop(query.queryPop(n));
-      int newGdp = nation.growGdp(query.queryGdp(n));
+    for(Nation n: nations){
       
-      query.updatePop(n, newPop);
-      query.updateGdp(n, newGdp);
+      n.growPop();
+      n.growGdp();
       
-      System.out.println(n + " Pop: " + newPop + "|GDP: " + newGdp);
+      query.updatePop(n.getName(), n.getPop());
+      query.updateGdp(n.getName(), n.getGdp());
     }
+  }
+  
+  /**
+   * Builds the nations list at instantiation.
+   * passTime() will update this.
+   * @return ArrayList of Nations
+   * @throws SQLException exception
+   */
+  public List<Nation> buildNations() throws SQLException{
+    
+    List<Nation> nations1 = new ArrayList<Nation>();
+    
+    for(String name: query.getNationNames()){
+      Nation n = new Nation(name, query.queryPop(name), query.queryGdp(name));
+      nations1.add(n);
+    }
+   
+    return nations1;
+  }
+  
+  /**
+   * Returns the ArrayList of Nations.
+   * @return nations
+   */
+  public List<Nation> getNations(){
+    return nations;
   }
 }
