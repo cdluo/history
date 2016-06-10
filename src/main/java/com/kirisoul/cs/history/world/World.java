@@ -53,6 +53,8 @@ public class World {
       
       query.updatePop(n.getName(), n.getPop());
       query.updateGdp(n.getName(), n.getGdp());
+      
+      System.out.println(n.toString());
     }
   }
   

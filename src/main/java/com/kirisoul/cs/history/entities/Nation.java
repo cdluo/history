@@ -37,4 +37,8 @@ public class Nation {
   public int getGdp(){
     return gdp;
   }
+  
+  public String toString(){
+    return name + "|Pop: " + pop + "|Gdp: " +gdp;
+  }
 }

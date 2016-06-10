@@ -12,6 +12,7 @@ import java.nio.file.Files;
 import java.sql.SQLException;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.SortedSet;
@@ -23,6 +24,7 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
+import com.google.gson.Gson;
 import com.kirisoul.cs.history.world.Time;
 import com.kirisoul.cs.history.world.World;
 
@@ -36,6 +38,7 @@ import spark.ModelAndView;
 import spark.QueryParamsMap;
 import spark.Request;
 import spark.Response;
+import spark.Route;
 import spark.TemplateViewRoute;
 import spark.ExceptionHandler;
 import spark.template.freemarker.FreeMarkerEngine;
@@ -54,6 +57,8 @@ public class Main {
   private Timer timer;
   private static final int DELAY = 1500;
   private static final int SECOND = 1000;
+  
+  private static final Gson GSON = new Gson();
 
   private Main(String[] args) {
     this.args = args;
@@ -71,22 +76,23 @@ public class Main {
       System.out.println("Please specify the location of a sqlite3 db after ./run");
       System.exit(1);
     }
+    
+    timer = new Timer();
+    
+    try{
+      world = new World(db);
+    }catch(SQLException | ClassNotFoundException e){
+      System.out.println("ERROR: Could not open database");
+      System.exit(1); 
+    }
+    
+    time = new Time(world);
+    timer.schedule(time, DELAY, SECOND);
 
     if (options.has("gui")) {
       runSparkServer();
     } else {
-      // Terminal Version
-      timer = new Timer();
-      
-      try{
-        world = new World(db);
-      }catch(SQLException | ClassNotFoundException e){
-        System.out.println("ERROR: Could not open database");
-        System.exit(1); 
-      }
-      
-      time = new Time(world);
-      timer.schedule(time, DELAY, SECOND);
+      // Terminal
     }
   }
 
@@ -104,38 +110,29 @@ public class Main {
 
   private void runSparkServer() {
     Spark.externalStaticFileLocation("src/main/resources/static");
-    Spark.exception(Exception.class, new ExceptionPrinter());
 
     FreeMarkerEngine freeMarker = createEngine();
 
     // Setup Spark Routes
-    Spark.get("/stars", new FrontHandler(), freeMarker);
+    Spark.get("/home", new FrontHandler(), freeMarker);
+    Spark.post("/time", new TimeHandler());
   }
 
   private class FrontHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
       Map<String, Object> variables =
-        ImmutableMap.of("title", "Stars: Query the database",
-                        "db", db);
+        ImmutableMap.of("title", "History");
       return new ModelAndView(variables, "query.ftl");
     }
   }
-
-
-  private static class ExceptionPrinter implements ExceptionHandler {
+  
+  private class TimeHandler implements Route {
     @Override
-    public void handle(Exception e, Request req, Response res) {
-      res.status(500);
-      StringWriter stacktrace = new StringWriter();
-      try (PrintWriter pw = new PrintWriter(stacktrace)) {
-        pw.println("<pre>");
-        e.printStackTrace(pw);
-        pw.println("</pre>");
-      }
-      res.body(stacktrace.toString());
+    public Object handle(Request req, Response res) {
+
+      return GSON.toJson(world.getNations());
     }
   }
-
 
 }
