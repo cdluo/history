@@ -19,11 +19,11 @@ public class Nation {
   }
   
   public void growPop(){
-    pop += (int) (Math.random()*10);
+    pop += (int) (Math.random()*(0.1*pop)-Math.random()*(0.1*pop));
   }
   
   public void growGdp(){
-    gdp += (int) (Math.random()*10);
+    gdp += (int) (Math.random()*(0.1*gdp)-Math.random()*(0.1*gdp));
   }
   
   public String getName(){

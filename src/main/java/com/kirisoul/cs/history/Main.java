@@ -55,8 +55,9 @@ public class Main {
   private World world;
   private Time time;
   private Timer timer;
-  private static final int DELAY = 1500;
+  private static final int DELAY = 1000;
   private static final int SECOND = 1000;
+  private static final int HALF_SECOND = 1000;
   
   private static final Gson GSON = new Gson();
 
@@ -87,12 +88,13 @@ public class Main {
     }
     
     time = new Time(world);
-    timer.schedule(time, DELAY, SECOND);
+    timer.schedule(time, DELAY, HALF_SECOND);
 
     if (options.has("gui")) {
       runSparkServer();
     } else {
       // Terminal
+      // Use to Edit DB (update methods in SQLQuery)
     }
   }
 
