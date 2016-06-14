@@ -3,8 +3,9 @@ var curWorld;
 function passTime(){
 	$.post("/time", function(response) {
 		curWorld = JSON.parse(response);
+		console.log(curWorld);
 		drawWorld();
-		setTimeout(passTime,1000);
+		setTimeout(passTime,500);	//Must match timer.schedule in Main
 	});
 }
 

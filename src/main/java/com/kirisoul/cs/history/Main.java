@@ -57,7 +57,8 @@ public class Main {
   private Timer timer;
   private static final int DELAY = 1000;
   private static final int SECOND = 1000;
-  private static final int HALF_SECOND = 1000;
+  private static final int HALF_SECOND = 500;
+  private static final int QUARTER_SECOND = 250;
   
   private static final Gson GSON = new Gson();
 

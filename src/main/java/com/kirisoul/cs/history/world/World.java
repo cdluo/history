@@ -35,9 +35,9 @@ public class World {
    * @param pop of the nation
    * @throws SQLException exception
    */
-  public void addNation(String name, int gdp, int pop) throws SQLException{
-    query.addNation(name, pop, gdp);
-    Nation added = new Nation(name, pop, gdp);
+  public void addNation(String name, int gdp, int pop, int social, int living) throws SQLException{
+    query.addNation(name, pop, gdp, social, living);
+    Nation added = new Nation(name, pop, gdp, social, living);
     nations.add(added);
   }
   
@@ -48,14 +48,17 @@ public class World {
   public void passTime() throws SQLException{
     for(Nation n: nations){
       
-      n.growPop();
-      n.growGdp();
+      n.passTime();
       
       query.updatePop(n.getName(), n.getPop());
       query.updateGdp(n.getName(), n.getGdp());
+      query.updateSocial(n.getName(), n.getSocial());
+      query.updateLiving(n.getName(), n.getLiving());
       
-      System.out.println(n.toString());
+      System.out.println(n.toString());  
     }
+    
+    System.out.println("");
   }
   
   /**
@@ -69,7 +72,8 @@ public class World {
     List<Nation> nations1 = new ArrayList<Nation>();
     
     for(String name: query.getNationNames()){
-      Nation n = new Nation(name, query.queryPop(name), query.queryGdp(name));
+      Nation n = new Nation(name, query.queryPop(name), query.queryGdp(name),
+                            query.querySocial(name), query.queryLiving(name));
       nations1.add(n);
     }
    

@@ -40,13 +40,15 @@ public class SQLQuery {
    * @throws SQLException exception
    */
   
-  public void addNation(String name, int pop, int gdp) throws SQLException {
-    String query = "INSERT INTO Nations VALUES (?,?,?)";
+  public void addNation(String name, int pop, int gdp, int social, int living) throws SQLException {
+    String query = "INSERT INTO Nations VALUES (?,?,?,?,?)";
     PreparedStatement ps = conn.prepareStatement(query);
 
     ps.setString(1, name);
     ps.setInt(2, pop);
     ps.setInt(3, gdp);
+    ps.setInt(4, social);
+    ps.setInt(5, living);
 
     ps.addBatch();
     ps.executeBatch();
@@ -124,6 +126,50 @@ public class SQLQuery {
   }
   
   /**
+   * Get the Social Stability index for a nation given its name
+   * @param name
+   * @return social
+   * @throws SQLException exception
+   */
+  public int querySocial(String name) throws SQLException {
+    String query = "SELECT Social FROM Nations WHERE " + "name = ?";
+
+    PreparedStatement prep = conn.prepareStatement(query);
+    prep.setString(1, name);
+
+    ResultSet rs = prep.executeQuery();
+
+    int gdp = rs.getInt(1);
+
+    rs.close();
+    prep.close();
+
+    return gdp;
+  }
+  
+  /**
+   * Gets the living standard of a nation given its name.
+   * @param name
+   * @return living
+   * @throws SQLException
+   */
+  public int queryLiving(String name) throws SQLException {
+    String query = "SELECT Living FROM Nations WHERE " + "name = ?";
+
+    PreparedStatement prep = conn.prepareStatement(query);
+    prep.setString(1, name);
+
+    ResultSet rs = prep.executeQuery();
+
+    int gdp = rs.getInt(1);
+
+    rs.close();
+    prep.close();
+
+    return gdp;
+  }
+  
+  /**
    * Updates a nation's population in the database
    * @param name
    * @param newPop
@@ -152,6 +198,42 @@ public class SQLQuery {
     PreparedStatement ps = conn.prepareStatement(query);
 
     ps.setInt(1, newGdp);
+    ps.setString(2, name);
+
+    ps.addBatch();
+    ps.executeBatch();
+    ps.close();
+  }
+  
+  /**
+   * Updates a nation's social stability in the db.
+   * @param name
+   * @param newSoc
+   * @throws SQLException
+   */
+  public void updateSocial(String name, int newSoc) throws SQLException {
+    String query = "UPDATE Nations SET Social = ? WHERE name = ?";
+    PreparedStatement ps = conn.prepareStatement(query);
+
+    ps.setInt(1, newSoc);
+    ps.setString(2, name);
+
+    ps.addBatch();
+    ps.executeBatch();
+    ps.close();
+  }
+  
+  /**
+   * Updates a nation's living standards in the db.
+   * @param name
+   * @param newLiv
+   * @throws SQLException
+   */
+  public void updateLiving(String name, int newLiv) throws SQLException {
+    String query = "UPDATE Nations SET Living = ? WHERE name = ?";
+    PreparedStatement ps = conn.prepareStatement(query);
+
+    ps.setInt(1, newLiv);
     ps.setString(2, name);
 
     ps.addBatch();
