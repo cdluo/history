@@ -25,6 +25,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
+import com.kirisoul.cs.database.SQLQuery;
 import com.kirisoul.cs.history.world.Time;
 import com.kirisoul.cs.history.world.World;
 
@@ -45,7 +46,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 
 
 public class Main {
-  public static void main(String[] args) throws SQLException {
+  public static void main(String[] args) throws SQLException, ClassNotFoundException {
     new Main(args).run();
   }
 
@@ -66,7 +67,7 @@ public class Main {
     this.args = args;
   }
 
-  private void run() throws SQLException {
+  private void run() throws SQLException, ClassNotFoundException {
     OptionParser parser = new OptionParser();
 
     parser.accepts("gui");
@@ -89,13 +90,18 @@ public class Main {
     }
     
     time = new Time(world);
-    timer.schedule(time, DELAY, HALF_SECOND);
+    timer.schedule(time, DELAY, SECOND);
 
     if (options.has("gui")) {
       runSparkServer();
     } else {
       // Terminal
       // Use to Edit DB (update methods in SQLQuery)
+      SQLQuery q = new SQLQuery(db);
+      
+      System.out.println(q.getEvent(0));
+      
+      System.exit(0);
     }
   }
 

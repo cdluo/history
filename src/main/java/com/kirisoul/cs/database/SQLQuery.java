@@ -240,4 +240,83 @@ public class SQLQuery {
     ps.executeBatch();
     ps.close();
   }
+  
+  
+  /////////////////////// Timeline ///////////////////////////
+  
+  /**
+   * Gets the present year.
+   * @return present year (int)
+   * @throws SQLException exception
+   */
+  public int getYear() throws SQLException {
+    String query = "SELECT Year FROM Timeline WHERE Event = ?";
+
+    PreparedStatement prep = conn.prepareStatement(query);
+    prep.setString(1, "Present");
+
+    ResultSet rs = prep.executeQuery();
+    
+    int year = rs.getInt(1);
+    rs.close();
+    prep.close();
+
+    return year;
+  }
+  
+  /**
+   * Updates the present year.
+   * @throws SQLException exception
+   */
+  public void IncYear() throws SQLException {
+    String query = "UPDATE Timeline SET Year = ? WHERE Event = ?";
+    PreparedStatement ps = conn.prepareStatement(query);
+
+    ps.setInt(1, getYear()+1);
+    ps.setString(2, "Present");
+
+    ps.addBatch();
+    ps.executeBatch();
+    ps.close();
+  }
+  
+  /**
+  * Adds a timeline event to the database
+  * @param e the event to be added
+  * @throws SQLException exception
+  */
+ 
+ public void addEvent(int year, String event) throws SQLException {
+   String query = "INSERT INTO Timeline VALUES (?,?)";
+   PreparedStatement ps = conn.prepareStatement(query);
+
+   ps.setInt(1, year);
+   ps.setString(2, event);
+
+   ps.addBatch();
+   ps.executeBatch();
+   ps.close();
+ }
+
+ public String getEvent(int year) throws SQLException {
+   String query = "SELECT Event FROM Timeline WHERE Year = ? AND EVENT != ?;";
+
+   PreparedStatement prep = conn.prepareStatement(query);
+   prep.setInt(1, year);
+   prep.setString(2, "Present");
+
+   ResultSet rs = prep.executeQuery();
+   
+   if(!rs.next()){
+     rs.close();
+     prep.close();
+     return null;
+   }else{
+     String event = rs.getString(1);
+     rs.close();
+     prep.close();
+
+     return event;
+   }
+ }
 }

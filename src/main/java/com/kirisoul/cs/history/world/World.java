@@ -46,6 +46,19 @@ public class World {
    * @throws SQLException exception
    */
   public void passTime() throws SQLException{
+    
+    query.IncYear();
+    System.out.println("Current Year: " + query.getYear());
+    System.out.println("");
+    
+    String event = query.getEvent(query.getYear());
+
+    if(event != null){
+      //Do event stuff (new classes for each event)
+      System.out.println(event + " happened!");
+      System.out.println("");
+    }
+    
     for(Nation n: nations){
       
       n.passTime();
@@ -58,7 +71,7 @@ public class World {
       System.out.println(n.toString());  
     }
     
-    System.out.println("");
+    System.out.println("----------------");
   }
   
   /**
