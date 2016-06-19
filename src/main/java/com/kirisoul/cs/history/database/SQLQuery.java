@@ -1,4 +1,4 @@
-package com.kirisoul.cs.database;
+package com.kirisoul.cs.history.database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.kirisoul.cs.history.events.Event;
 
 public class SQLQuery {
   
@@ -298,25 +300,26 @@ public class SQLQuery {
    ps.close();
  }
 
- public String getEvent(int year) throws SQLException {
-   String query = "SELECT Event FROM Timeline WHERE Year = ? AND EVENT != ?;";
+ public List<Event> getEvent(int year) throws SQLException {
+   String query = "SELECT * FROM Timeline WHERE Year = ? AND EVENT != ?;";
 
    PreparedStatement prep = conn.prepareStatement(query);
    prep.setInt(1, year);
    prep.setString(2, "Present");
 
    ResultSet rs = prep.executeQuery();
+ 
+   List<Event> events = new ArrayList<Event>();
    
-   if(!rs.next()){
-     rs.close();
-     prep.close();
+   while (rs.next()) {
+     Event newEvent = new Event(rs.getInt(1), rs.getString(2), rs.getString(3));
+     events.add(newEvent);
+   }
+   
+   if(events.isEmpty()){
      return null;
    }else{
-     String event = rs.getString(1);
-     rs.close();
-     prep.close();
-
-     return event;
+     return events;
    }
  }
 }

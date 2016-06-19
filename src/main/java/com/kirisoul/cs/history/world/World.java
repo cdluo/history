@@ -4,8 +4,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.kirisoul.cs.database.SQLQuery;
+import com.kirisoul.cs.history.database.SQLQuery;
 import com.kirisoul.cs.history.entities.Nation;
+import com.kirisoul.cs.history.events.Event;
 
 /**
  * Conducts all the logic for the game
@@ -51,11 +52,15 @@ public class World {
     System.out.println("Current Year: " + query.getYear());
     System.out.println("");
     
-    String event = query.getEvent(query.getYear());
+    List<Event> events = query.getEvent(query.getYear());
 
-    if(event != null){
+    if(events != null){
+      
+      for(Event e: events){
       //Do event stuff (new classes for each event)
-      System.out.println(event + " happened!");
+        System.out.println(e.getYear() + ": " + e.getName() + " happened in " + e.getTo() + ".");  
+      }
+      
       System.out.println("");
     }
     

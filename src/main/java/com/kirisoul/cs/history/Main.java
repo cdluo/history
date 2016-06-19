@@ -25,7 +25,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
-import com.kirisoul.cs.database.SQLQuery;
+import com.kirisoul.cs.history.database.SQLQuery;
 import com.kirisoul.cs.history.world.Time;
 import com.kirisoul.cs.history.world.World;
 
@@ -99,7 +99,7 @@ public class Main {
       // Use to Edit DB (update methods in SQLQuery)
       SQLQuery q = new SQLQuery(db);
       
-      System.out.println(q.getEvent(0));
+      System.out.println(q.getEvent(50));
       
       System.exit(0);
     }
