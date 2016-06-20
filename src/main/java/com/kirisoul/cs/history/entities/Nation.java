@@ -23,19 +23,42 @@ public class Nation {
   }
   
   public void growPop(){
-    pop += (int) (Math.random()*(0.1*pop)-Math.random()*(0.1*pop));
+    pop += (int) Math.floor(1 + Math.random()*(0.01*pop));
   }
   
   public void growGdp(){
-    gdp += (int) (Math.random()*(0.1*gdp)-Math.random()*(0.1*gdp));
+    gdp += (int) Math.floor(1 + Math.random()*(0.01*gdp));
+    gdp -= (int) Math.floor(1 + Math.random()*(0.01*gdp));
   }
   
   public void growSocial(){
-    social += 1;
+    social += Math.round(Math.random());
+    social -= Math.round(Math.random());
   }
   
   public void growLiving(){
-    living += 1;
+    living += Math.round(Math.random());
+    living -= Math.round(Math.random());
+  }
+  
+  public void eventPop(double[] changes){
+    pop = (int) Math.floor(pop * (1 + (changes[0]/100)));
+    pop += changes[1];
+  }
+  
+  public void eventGdp(double[] changes){
+    gdp = (int) Math.floor(gdp * (1 + (changes[0]/100)));
+    gdp += changes[1];
+  }
+  
+  public void eventSocial(double[] changes){
+    social = (int) Math.floor(social * (1 + (changes[0]/100)));
+    social += changes[1];
+  }
+  
+  public void eventLiving(double[] changes){
+    living = (int) Math.floor(living * (1 + (changes[0]/100)));
+    living += changes[1];
   }
   
   public void passTime(){

@@ -26,6 +26,10 @@ import com.google.common.collect.ImmutableMap;
 import com.google.common.collect.Sets;
 import com.google.gson.Gson;
 import com.kirisoul.cs.history.database.SQLQuery;
+import com.kirisoul.cs.history.entities.Nation;
+import com.kirisoul.cs.history.events.Event;
+import com.kirisoul.cs.history.events.EventGenerator;
+import com.kirisoul.cs.history.events.EventInterpreter;
 import com.kirisoul.cs.history.world.Time;
 import com.kirisoul.cs.history.world.World;
 
@@ -97,10 +101,30 @@ public class Main {
     } else {
       // Terminal
       // Use to Edit DB (update methods in SQLQuery)
+      
       SQLQuery q = new SQLQuery(db);
+//      
+//      System.out.println(q.getEvent(50));
       
-      System.out.println(q.getEvent(50));
+//      EventGenerator eg = new EventGenerator(q);
+//      eg.generate();
       
+      Nation test = new Nation("test", 100000, 4000, 100, 100);
+      
+      EventInterpreter eI = new EventInterpreter();
+      Event e = new Event(100, "Economic Boom", "test");
+      eI.interpret(e);
+      
+      test.eventPop(eI.getPop());
+      test.eventGdp(eI.getGdp());
+      test.eventSocial(eI.getSocial());
+      test.eventLiving(eI.getLiving());
+      
+      test.passTime();
+      
+      System.out.println(test.toString());
+      
+      System.out.println("Done");
       System.exit(0);
     }
   }

@@ -1,5 +1,7 @@
 package com.kirisoul.cs.history.events;
 
+import java.sql.SQLException;
+
 import com.kirisoul.cs.history.database.SQLQuery;
 
 /**
@@ -9,7 +11,7 @@ import com.kirisoul.cs.history.database.SQLQuery;
  * 
  * (Major)
  * -War
- * -Natural Disaster
+ * -Natural Disaster (DONE)
  * -Major Innovation/Invention
  * -Revolution
  *    -Social
@@ -17,10 +19,9 @@ import com.kirisoul.cs.history.database.SQLQuery;
  *    -Governmental
  *    
  * (Minor)
- * -Election
- * -New Laws on (X)
- * -Economic Downturn
- * -Economic Boom
+ * -Election (DONE)
+ * -Economic Downturn (DONE)
+ * -Economic Boom (DONE)
  *    
  * @author ChrisLuo
  */
@@ -34,10 +35,38 @@ public class EventGenerator {
   }
   
   /**
-   * Adds one event within the next 100 years of the present year.
+   * Adds an event to the timeline.
+   * @throws SQLException 
    */
-  public void addEvent(){
+  public void addEvent(Event e) throws SQLException{
+    db.addEvent(e.getYear(), e.getName(), e.getTo());
+  }
+  
+  /**
+   * Generates an event and adds it to the timeline.
+   * @throws SQLException
+   */
+  public void generate() throws SQLException{
+    int year = db.getYear() + (int) Math.floor(Math.random()*100);  //For event
     
+    int type = (int) Math.floor(Math.random()*100);
+    String name;  //For event
+   
+    if(type > 95){
+      name = "Natural Disaster";
+    }else if(type > 67){
+      name = "Election";
+    }else if(type > 33){
+      name = "Economic Downturn";
+    }else{
+      name = "Economic Boom";
+    }
+    
+    int index = (int) Math.floor(Math.random() * db.getNationNames().size());
+    String to = (String) db.getNationNames().toArray()[index];
+    
+    Event newEvent = new Event(year, name, to);
+    addEvent(newEvent);
   }
   
 }

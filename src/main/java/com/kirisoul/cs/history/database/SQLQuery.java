@@ -41,7 +41,6 @@ public class SQLQuery {
    * @param n the nation to be added
    * @throws SQLException exception
    */
-  
   public void addNation(String name, int pop, int gdp, int social, int living) throws SQLException {
     String query = "INSERT INTO Nations VALUES (?,?,?,?,?)";
     PreparedStatement ps = conn.prepareStatement(query);
@@ -56,7 +55,6 @@ public class SQLQuery {
     ps.executeBatch();
     ps.close();
   }
-  
   
   /**
    * Gets a list of all the nations in the database
@@ -243,7 +241,6 @@ public class SQLQuery {
     ps.close();
   }
   
-  
   /////////////////////// Timeline ///////////////////////////
   
   /**
@@ -287,19 +284,25 @@ public class SQLQuery {
   * @param e the event to be added
   * @throws SQLException exception
   */
- 
- public void addEvent(int year, String event) throws SQLException {
-   String query = "INSERT INTO Timeline VALUES (?,?)";
+ public void addEvent(int year, String event, String to) throws SQLException {
+   String query = "INSERT INTO Timeline VALUES (?,?,?)";
    PreparedStatement ps = conn.prepareStatement(query);
 
    ps.setInt(1, year);
    ps.setString(2, event);
+   ps.setString(3, to);
 
    ps.addBatch();
    ps.executeBatch();
    ps.close();
  }
 
+ /**
+  * Gets the events for a given year
+  * @param year integer
+  * @return List of events
+  * @throws SQLException exception
+  */
  public List<Event> getEvent(int year) throws SQLException {
    String query = "SELECT * FROM Timeline WHERE Year = ? AND EVENT != ?;";
 

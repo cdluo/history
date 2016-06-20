@@ -7,6 +7,8 @@ import java.util.List;
 import com.kirisoul.cs.history.database.SQLQuery;
 import com.kirisoul.cs.history.entities.Nation;
 import com.kirisoul.cs.history.events.Event;
+import com.kirisoul.cs.history.events.EventGenerator;
+import com.kirisoul.cs.history.events.EventInterpreter;
 
 /**
  * Conducts all the logic for the game
@@ -16,7 +18,9 @@ import com.kirisoul.cs.history.events.Event;
 public class World {
 
   private SQLQuery query;
-  private List<Nation> nations;
+  private List<Nation> nations;   //Make a hashmap
+  private EventGenerator eventGen;
+  private EventInterpreter eventInterpret;
   
   /**
    * Constructor
@@ -27,6 +31,8 @@ public class World {
   public World(String db) throws ClassNotFoundException, SQLException{
     query = new SQLQuery(db);
     nations = buildNations();
+    eventGen = new EventGenerator(query);
+    eventInterpret = new EventInterpreter();
   }
   
   /**
@@ -49,6 +55,10 @@ public class World {
   public void passTime() throws SQLException{
     
     query.IncYear();
+    if(query.getYear() % 10 == 0){
+      eventGen.generate();
+    }
+    
     System.out.println("Current Year: " + query.getYear());
     System.out.println("");
     
@@ -58,7 +68,9 @@ public class World {
       
       for(Event e: events){
       //Do event stuff (new classes for each event)
-        System.out.println(e.getYear() + ": " + e.getName() + " happened in " + e.getTo() + ".");  
+        System.out.println(e.getYear() + ": " + e.getName() + " happened in " + e.getTo() + "."); 
+        
+        interpretEvent(e);
       }
       
       System.out.println("");
@@ -77,6 +89,41 @@ public class World {
     }
     
     System.out.println("----------------");
+  }
+  
+  public void interpretEvent(Event e) throws SQLException{
+    eventInterpret.interpret(e);
+    String to = e.getTo();
+    
+    int flag = 0;
+    //Will be better once this is a hashmap
+    for(Nation n: nations){
+      if(n.getName().equals(to)){
+//        System.out.println("Before GDP: " + n.getGdp());
+        
+        n.eventPop(eventInterpret.getPop());
+        n.eventGdp(eventInterpret.getGdp());
+//        System.out.println(eventInterpret.getGdp()[0] + "|" + eventInterpret.getGdp()[1]);
+        n.eventSocial(eventInterpret.getSocial());
+        n.eventLiving(eventInterpret.getLiving());
+        
+//        System.out.println("After GDP: " + n.getGdp());
+        
+        query.updatePop(n.getName(), n.getPop());
+        query.updateGdp(n.getName(), n.getGdp());
+        query.updateSocial(n.getName(), n.getSocial());
+        query.updateLiving(n.getName(), n.getLiving());
+        
+        flag=1;
+      }
+    }
+    
+    if(flag == 0){
+      System.out.println("Warning, could not find nation to apply event to.");
+    }
+    
+    ////////
+    
   }
   
   /**
