@@ -34,11 +34,27 @@ public class Nation {
   public void growSocial(){
     social += Math.round(Math.random());
     social -= Math.round(Math.random());
+    
+    if(social > 100){
+      social = 100;
+    }
+    
+    if(social < 0){
+      social = 0;
+    }
   }
   
   public void growLiving(){
     living += Math.round(Math.random());
     living -= Math.round(Math.random());
+    
+    if(living > 100){
+      living = 100;
+    }
+    
+    if(living < 0){
+      living = 0;
+    }
   }
   
   public void eventPop(double[] changes){
@@ -54,11 +70,27 @@ public class Nation {
   public void eventSocial(double[] changes){
     social = (int) Math.floor(social * (1 + (changes[0]/100)));
     social += changes[1];
+    
+    if(social > 100){
+      social = 100;
+    }
+    
+    if(social < 0){
+      social = 0;
+    }
   }
   
   public void eventLiving(double[] changes){
     living = (int) Math.floor(living * (1 + (changes[0]/100)));
     living += changes[1];
+    
+    if(living > 100){
+      living = 100;
+    }
+    
+    if(living < 0){
+      living = 0;
+    }
   }
   
   public void passTime(){

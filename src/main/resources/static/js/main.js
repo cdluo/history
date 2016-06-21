@@ -5,7 +5,7 @@ function passTime(){
 		curWorld = JSON.parse(response);
 		console.log(curWorld);
 		drawWorld();
-		setTimeout(passTime,500);	//Must match timer.schedule in Main
+		setTimeout(passTime,1000);	//Must match timer.schedule in Main
 	});
 }
 
@@ -40,6 +40,8 @@ function drawNation(nation){
 
 	var popLength = Math.floor(nation.pop/100);
 	var gdpLength = Math.floor(nation.gdp/100);
+	var socialLength = nation.social*3;
+	var livingLength = nation.living*3;
 
 	ctx.beginPath();
 	ctx.moveTo(0,50);
@@ -49,9 +51,23 @@ function drawNation(nation){
 	ctx.stroke();
 
 	ctx.beginPath();
-	ctx.moveTo(0,100);
-	ctx.lineTo(gdpLength,100);
+	ctx.moveTo(0,85);
+	ctx.lineTo(gdpLength,85);
 	ctx.strokeStyle = "green";
+
+	ctx.stroke();
+
+	ctx.beginPath();
+	ctx.moveTo(0,120);
+	ctx.lineTo(socialLength,120);
+	ctx.strokeStyle = "pink";
+
+	ctx.stroke();
+
+	ctx.beginPath();
+	ctx.moveTo(0,155);
+	ctx.lineTo(livingLength,155);
+	ctx.strokeStyle = "blue";
 
 	ctx.stroke();
 }
