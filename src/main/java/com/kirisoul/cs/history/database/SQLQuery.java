@@ -320,9 +320,38 @@ public class SQLQuery {
    }
    
    if(events.isEmpty()){
+     rs.close();
+     prep.close();
      return null;
    }else{
+     rs.close();
+     prep.close();
      return events;
    }
+ }
+ 
+ /**
+  * Gets the entire timeline (for logging purposes in the GUI?)
+  * @return entire timeline in a list of events
+  * @throws SQLException exception
+  */
+ public List<Event> getTimeline() throws SQLException{
+   String query = "SELECT * FROM Timeline;";
+
+   PreparedStatement prep = conn.prepareStatement(query);
+
+   ResultSet rs = prep.executeQuery();
+ 
+   List<Event> events = new ArrayList<Event>();
+   
+   while (rs.next()) {
+     Event newEvent = new Event(rs.getInt(1), rs.getString(2), rs.getString(3));
+     events.add(newEvent);
+   }
+   
+   rs.close();
+   prep.close();
+   return events;
+   
  }
 }

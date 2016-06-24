@@ -56,6 +56,7 @@ public class Main {
 
   private String[] args;
   private String db;
+  private SQLQuery sqlDB;
   
   private World world;
   private Time time;
@@ -93,6 +94,8 @@ public class Main {
       System.exit(1); 
     }
     
+    sqlDB = new SQLQuery(db);
+    
     time = new Time(world);
     timer.schedule(time, DELAY, SECOND);
 
@@ -102,7 +105,7 @@ public class Main {
       // Terminal
       // Use to Edit DB (update methods in SQLQuery)
       
-      SQLQuery q = new SQLQuery(db);
+
 //      
 //      System.out.println(q.getEvent(50));
       
@@ -149,13 +152,15 @@ public class Main {
     // Setup Spark Routes
     Spark.get("/home", new FrontHandler(), freeMarker);
     Spark.post("/time", new TimeHandler());
+    Spark.post("/timeline", new TimelineHandler());
+    Spark.post("/year", new YearHandler());
   }
 
   private class FrontHandler implements TemplateViewRoute {
     @Override
     public ModelAndView handle(Request req, Response res) {
       Map<String, Object> variables =
-        ImmutableMap.of("title", "History");
+        ImmutableMap.of("title", "History", "header", db);
       return new ModelAndView(variables, "query.ftl");
     }
   }
@@ -165,6 +170,22 @@ public class Main {
     public Object handle(Request req, Response res) {
 
       return GSON.toJson(world.getNations());
+    }
+  }
+  
+  private class TimelineHandler implements Route {
+    @Override
+    public Object handle(Request req, Response res) {
+      
+      return GSON.toJson(world.getCurEvents());
+    }
+  }
+  
+  private class YearHandler implements Route {
+    @Override
+    public Object handle(Request req, Response res) {
+      
+      return GSON.toJson(world.getYear());
     }
   }
 

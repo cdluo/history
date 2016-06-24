@@ -1,6 +1,17 @@
 <#assign content>
 
-<h1> History </h1>
+<div id="header">
+	<h1> ${header}: </h1> <h1 id="year"> X </h1>
+</div>
+
+<div id="events">
+	<p class="mes black">Welcome to the New World</p>
+</div>
+
+<div id="canvasWorld">
+</div>
+
+<br>
 
 </#assign>
 <#include "main.ftl">

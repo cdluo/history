@@ -11,5 +11,6 @@
      ${content}
      <script src="js/jquery-2.1.1.js"></script>
      <script src="js/main.js"></script>
+     <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
   </body>
 </html>

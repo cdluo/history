@@ -1,3 +1,70 @@
+html, body{
+    height: 100%;
+}
+
 h1{
+	display: inline-block;
+	margin-top:10px;
+	margin-bottom:0;
+}
+
+#header{
+	display:block;
 	text-align:center;
+}
+
+#year{
+	position: relative;
+	left: 12px;
+}
+
+canvas{
+	text-align:left;
+}
+
+#canvasWorld{
+	position:relative;
+	top:25px;
+	display:block;
+	width:80%;
+	height:60%;
+	margin: 0 auto;
+}
+
+#events{
+  display:block;
+  margin:0 auto;
+  text-align:center;
+  width:60%;
+  height: 100px;
+  font-family: "Arial";
+  font-size: 32px;
+  resize:none;
+  /*box-shadow: 2px 2px 3px #000000;*/
+  overflow-y:scroll;
+  border:1px solid gray;
+}
+
+.mes{
+	font-family:"Arial";
+}
+
+.black{
+  color:black;
+}
+
+.red{
+  color:#ff3333;
+}
+
+.white{
+  color:white;
+}
+
+.green{
+  color:#66ff99;
+}
+
+.blue{
+  color:#ffa64d;
 }

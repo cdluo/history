@@ -21,6 +21,8 @@ public class World {
   private List<Nation> nations;   //Make a hashmap
   private EventGenerator eventGen;
   private EventInterpreter eventInterpret;
+  private List<Event> curEvents;
+  private int year;
   
   /**
    * Constructor
@@ -33,6 +35,8 @@ public class World {
     nations = buildNations();
     eventGen = new EventGenerator(query);
     eventInterpret = new EventInterpreter();
+    curEvents = null;
+    year = -1;
   }
   
   /**
@@ -55,18 +59,19 @@ public class World {
   public void passTime() throws SQLException{
     
     query.IncYear();
-    if(query.getYear() % 10 == 0){
+    year = query.getYear();
+    if(year % 10 == 0){
       eventGen.generate();
     }
     
-    System.out.println("Current Year: " + query.getYear());
+    System.out.println("Current Year: " + year);
     System.out.println("");
     
-    List<Event> events = query.getEvent(query.getYear());
+    curEvents = query.getEvent(year);
 
-    if(events != null){
+    if(curEvents != null){
       
-      for(Event e: events){
+      for(Event e: curEvents){
       //Do event stuff (new classes for each event)
         System.out.println(e.getYear() + ": " + e.getName() + " happened in " + e.getTo() + "."); 
         
@@ -151,5 +156,13 @@ public class World {
    */
   public List<Nation> getNations(){
     return nations;
+  }
+  
+  public List<Event> getCurEvents(){
+    return curEvents;
+  }
+  
+  public int getYear(){
+    return year;
   }
 }
