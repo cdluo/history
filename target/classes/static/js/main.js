@@ -1,12 +1,19 @@
 //Learned: 
-//-Must add canvas element to doc itself before referencing it! Duh! (No sense of object until it physically exists)
+
+// -Must add canvas element to doc itself before referencing it! Duh! (No sense of object until it physically exists)
+// -Only set the ticker on instantiation. Basically, a lot of it is like Java! (More than you would think at first)
+// -If a dumb thing is taking a long time, it's probably something wrong with your assumption.
 
 'use strict';
 
 var curWorld;
 var timeline;
 var year;
+var canvStgMap = new Array();		//Associative Array (Dictionary) for linking a canvas id to its stage.
 
+/*
+	Central time keeping function. Essentially the page's Main().
+*/
 function passTime(){
 	$.post("/time", function(response) {
 		curWorld = JSON.parse(response);
@@ -28,12 +35,17 @@ function passTime(){
 	setTimeout(passTime,1000);	//Must match timer.schedule in Main
 }
 
+/*
+	Called during each post to "/time".
+*/
 function drawWorld(){
 	for(var i=0; i<curWorld.length; i++){
 		var nation = curWorld[i];
 		if(document.getElementById(nation.name)){
+			//canvas already exists, draw on it.
 			drawNation(curWorld[i]);
 		}else{
+			//make a new canvas
 			var canv = document.createElement('canvas');
 			canv.id = curWorld[i].name;
 
@@ -46,38 +58,66 @@ function drawWorld(){
 			// canv.style.height = "49%";
 
 			document.getElementById("canvasWorld").appendChild(canv);
-			init(canv.id);
+			init(canv.id);		//Instantiate a stage for the new canvas.
 		}	
 	}
 }
 
-//For EaselJS
+/*
+	Initializing EaselJS stage for the passed in canvas.
+*/
 function init(canvas){
 
 	var stage = new createjs.Stage(canvas);
-	var circle = new createjs.Shape();
-	circle.graphics.beginFill("black").drawCircle(0, 0, 50);
-	circle.x = 100;
-	circle.y = 100;
-	stage.addChild(circle);
-	
-	createjs.Tween.get(circle, { loop: true })
-	  .to({ x: 400 }, 1000, createjs.Ease.getPowInOut(4))
-	  .to({ alpha: 0, y: 175 }, 500, createjs.Ease.getPowInOut(2))
-	  .to({ alpha: 0, y: 225 }, 100)
-	  .to({ alpha: 1, y: 200 }, 500, createjs.Ease.getPowInOut(2))
-	  .to({ x: 100 }, 800, createjs.Ease.getPowInOut(2));
+	canvStgMap[canvas] = stage;
 
-	createjs.Ticker.setFPS(60);
-	createjs.Ticker.addEventListener("tick", stage);
+	createjs.Ticker.on("tick", handleTick);
+  createjs.Ticker.framerate = 30;
+    function handleTick(event) {
+        stage.update(event);
+    }
+
+	var ff6Person = new Image();
+	ff6Person.src = "images/FF6Sprite.png";
+	ff6Person.onload = addPerson(stage, ff6Person);
+
 }
 
-function drawNation(nation){
-	var canvas = document.getElementById(nation.name);
+/*
+	Adds a person based on a spritesheet image for the passed in stage.
+*/
+function addPerson(stage, image){
 
-	//TODO: Use EaselJS Here
-	//
-	//
+	var person = {
+	  images: [image],
+	  frames: {width:20, height:30, regX:0, regY:0, spacing:0, margin:0},
+	  animations: {
+	  	one: [0],	
+	  	two: [1],
+	  	three: [2],
+	    walk: [0,2,"walk",0.33]
+    }
+  };
+
+  var spriteSheet = new createjs.SpriteSheet(person);
+
+  var sprite = new createjs.Sprite(spriteSheet);
+  sprite.scaleX = 3;
+  sprite.scaleY = 3;
+  sprite.gotoAndPlay("walk");
+
+  stage.addChild(sprite);
+}
+
+/*
+	Draws a nation as part of drawWorld().
+*/
+function drawNation(nation){
+	var stage = canvStgMap[nation.name];
+	// stage.clear();
+
+  //Other EaselJS Stuff
+
 }
 
 /**
@@ -107,6 +147,9 @@ function drawTimeline(){
 	}
 }
 
+/*
+	Scrolls the event log window.
+*/
 function scrollEvents(){
   var events = document.getElementById("events");
 
@@ -115,6 +158,8 @@ function scrollEvents(){
   }
 }
 
-
+/*
+	Begins the script like the main method.
+*/
 passTime();
 
