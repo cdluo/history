@@ -1,4 +1,7 @@
-<script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
+//Learned: 
+//-Must add canvas element to doc itself before referencing it! Duh! (No sense of object until it physically exists)
+
+'use strict';
 
 var curWorld;
 var timeline;
@@ -19,7 +22,6 @@ function passTime(){
 
 	$.post("/year", function(response) {
 		year = JSON.parse(response);
-		console.log(year);
 		document.getElementById("year").innerHTML = year;
 	});
 
@@ -27,7 +29,7 @@ function passTime(){
 }
 
 function drawWorld(){
-	for(i=0; i<curWorld.length; i++){
+	for(var i=0; i<curWorld.length; i++){
 		var nation = curWorld[i];
 		if(document.getElementById(nation.name)){
 			drawNation(curWorld[i]);
@@ -37,32 +39,45 @@ function drawWorld(){
 
 			//Actual height
 			canv.width = 500;
-			canv.height = 200;
+			canv.height = 300;
 
 			//Displayed height
 			// canv.style.width = "49%";
 			// canv.style.height = "49%";
 
 			document.getElementById("canvasWorld").appendChild(canv);
+			init(canv.id);
 		}	
 	}
+}
+
+//For EaselJS
+function init(canvas){
+
+	var stage = new createjs.Stage(canvas);
+	var circle = new createjs.Shape();
+	circle.graphics.beginFill("black").drawCircle(0, 0, 50);
+	circle.x = 100;
+	circle.y = 100;
+	stage.addChild(circle);
+	
+	createjs.Tween.get(circle, { loop: true })
+	  .to({ x: 400 }, 1000, createjs.Ease.getPowInOut(4))
+	  .to({ alpha: 0, y: 175 }, 500, createjs.Ease.getPowInOut(2))
+	  .to({ alpha: 0, y: 225 }, 100)
+	  .to({ alpha: 1, y: 200 }, 500, createjs.Ease.getPowInOut(2))
+	  .to({ x: 100 }, 800, createjs.Ease.getPowInOut(2));
+
+	createjs.Ticker.setFPS(60);
+	createjs.Ticker.addEventListener("tick", stage);
 }
 
 function drawNation(nation){
 	var canvas = document.getElementById(nation.name);
 
-	// Get size of canvas (not needed?)
-	// var rect = canvas.getBoundingClientRect();
-	// console.log(rect.top, rect.right, rect.bottom, rect.left);
-
-	var ctx = canvas.getContext("2d");
-	ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-	ctx.font = "32px Arial";
-    ctx.fillStyle = "#000000";
-	ctx.fillText(nation.name, 0, 32);
-
-	// drawPerson(ctx);		FOR EASEL JS (DRAWING CANVAS NATION)
+	//TODO: Use EaselJS Here
+	//
+	//
 }
 
 /**
@@ -70,10 +85,10 @@ function drawNation(nation){
  * color must be "white", "green", "red", or "blue"
  */
 function drawTimeline(){
-
+	
 	var color;
 
-	for(i=0; i<timeline.length; i++){
+	for(var i=0; i<timeline.length; i++){
 		var newPar = document.createElement("p");
 
 		if(timeline[i].name == "Economic Downturn"){
@@ -90,7 +105,6 @@ function drawTimeline(){
 		document.getElementById("events").appendChild(newPar);
 		scrollEvents();
 	}
-
 }
 
 function scrollEvents(){
@@ -100,7 +114,6 @@ function scrollEvents(){
     events.scrollTop = events.scrollTop + 10000
   }
 }
-
 
 
 passTime();
