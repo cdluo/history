@@ -58,7 +58,7 @@ function drawWorld(){
 			// canv.style.height = "49%";
 
 			document.getElementById("canvasWorld").appendChild(canv);
-			init(canv.id);		//Instantiate a stage for the new canvas.
+			init(canv.id, curWorld[i]);		//Instantiate a stage for the new canvas.
 		}	
 	}
 }
@@ -66,7 +66,7 @@ function drawWorld(){
 /*
 	Initializing EaselJS stage for the passed in canvas.
 */
-function init(canvas){
+function init(canvas, nation){
 
 	var stage = new createjs.Stage(canvas);
 	canvStgMap[canvas] = stage;
@@ -77,9 +77,28 @@ function init(canvas){
         stage.update(event);
     }
 
+  // Pop
 	var ff6Person = new Image();
 	ff6Person.src = "images/FF6Sprite.png";
 	ff6Person.onload = addPerson(stage, ff6Person);
+
+	var popLabel = new createjs.Text(nation.pop, "24px Arial", "#000000");
+	popLabel.x = 125;
+	popLabel.y = 30;
+
+	stage.addChild(popLabel);
+
+	// Gdp
+	var dollar = new Image();
+	dollar.src = "images/dollarSpriteSheet.png";
+	dollar.onload = addDollar(stage, dollar);
+
+	var gdpLabel = new createjs.Text(nation.gdp, "24px Arial", "#000000");
+	gdpLabel.x = 125;
+	gdpLabel.y = 90;
+
+	stage.addChild(gdpLabel);
+
 
 }
 
@@ -90,7 +109,7 @@ function addPerson(stage, image){
 
 	var person = {
 	  images: [image],
-	  frames: {width:20, height:30, regX:0, regY:0, spacing:0, margin:0},
+	  frames: {width:20, height:30, regX:-5, regY:0, spacing:0, margin:0},
 	  animations: {
 	  	one: [0],	
 	  	two: [1],
@@ -102,9 +121,32 @@ function addPerson(stage, image){
   var spriteSheet = new createjs.SpriteSheet(person);
 
   var sprite = new createjs.Sprite(spriteSheet);
-  sprite.scaleX = 3;
-  sprite.scaleY = 3;
+  sprite.scaleX = 2.5;
+  sprite.scaleY = 2.5;
   sprite.gotoAndPlay("walk");
+
+  stage.addChild(sprite);
+}
+
+/*
+	Adds a person based on a spritesheet image for the passed in stage.
+*/
+function addDollar(stage, image){
+
+	var data = {
+	  images: [image],
+	  frames: {width:50, height:20, regX:0, regY:-50, spacing:5, margin:0},
+	  animations: {
+	    shine: [0,2,"shine",0.2]
+    }
+  };
+
+  var spriteSheet = new createjs.SpriteSheet(data);
+
+  var sprite = new createjs.Sprite(spriteSheet);
+  sprite.scaleX = 1.75;
+  sprite.scaleY = 1.75;
+  sprite.gotoAndPlay("shine");
 
   stage.addChild(sprite);
 }
@@ -114,10 +156,8 @@ function addPerson(stage, image){
 */
 function drawNation(nation){
 	var stage = canvStgMap[nation.name];
-	// stage.clear();
 
-  //Other EaselJS Stuff
-
+	//Use for updating the stuff you instantiated in init.
 }
 
 /**

@@ -86,9 +86,10 @@ function init(canvas, nation){
 	popLabel.x = 125;
 	popLabel.y = 30;
 
+	popLabel.name = "popLabel";
 	stage.addChild(popLabel);
 
-	//Gdp
+	// Gdp
 	var dollar = new Image();
 	dollar.src = "images/dollarSpriteSheet.png";
 	dollar.onload = addDollar(stage, dollar);
@@ -97,9 +98,32 @@ function init(canvas, nation){
 	gdpLabel.x = 125;
 	gdpLabel.y = 90;
 
+	gdpLabel.name = "gdpLabel";
 	stage.addChild(gdpLabel);
 
+	//Social
+	var social = new Image();
+	social.src = "images/Social.png";
+	social.onload =  addSocial(stage,social);
 
+	var socialLabel = new createjs.Text(nation.social, "24px Arial", "#000000");
+	socialLabel.x = 125;
+	socialLabel.y = 150;
+
+	socialLabel.name = "socialLabel";
+	stage.addChild(socialLabel);
+
+	//Living
+	var living = new Image();
+	living.src = "images/Living.png";
+	living.onload =  addLiving(stage,living);
+
+	var livingLabel = new createjs.Text(nation.living, "24px Arial", "#000000");
+	livingLabel.x = 125;
+	livingLabel.y = 230;
+
+	livingLabel.name = "livingLabel";
+	stage.addChild(livingLabel);
 }
 
 /*
@@ -109,7 +133,7 @@ function addPerson(stage, image){
 
 	var person = {
 	  images: [image],
-	  frames: {width:20, height:30, regX:-5, regY:0, spacing:0, margin:0},
+	  frames: {width:20, height:30, regX:-10, regY:0, spacing:0, margin:0},
 	  animations: {
 	  	one: [0],	
 	  	two: [1],
@@ -125,17 +149,18 @@ function addPerson(stage, image){
   sprite.scaleY = 2.5;
   sprite.gotoAndPlay("walk");
 
+  sprite.name = "person";
   stage.addChild(sprite);
 }
 
 /*
-	Adds a person based on a spritesheet image for the passed in stage.
+	Adds a dollar sprite
 */
 function addDollar(stage, image){
 
 	var data = {
 	  images: [image],
-	  frames: {width:50, height:20, regX:0, regY:-50, spacing:5, margin:0},
+	  frames: {width:50, height:20, regX:-3, regY:-50, spacing:5, margin:0},
 	  animations: {
 	    shine: [0,2,"shine",0.2]
     }
@@ -148,8 +173,70 @@ function addDollar(stage, image){
   sprite.scaleY = 1.75;
   sprite.gotoAndPlay("shine");
 
+  sprite.name = "dollar";
   stage.addChild(sprite);
 }
+
+/*
+	Adds a speech bubble
+*/
+function addSocial(stage, image){
+
+	var data = {
+	  images: [image],
+	  frames: {width:71, height:61, regX:0, regY:-100, spacing:0, margin:0},
+	  animations: {
+	  	heart: [8,9,"heart",0.1],	
+	  	dot: {
+            frames: [0,10,3,7],
+            next: "dot",
+            speed: 0.05
+      },
+      anger: {
+            frames: [6,4,2,5,1],
+            next: "anger",
+            speed: 0.4
+      }
+    }
+  };
+
+  var spriteSheet = new createjs.SpriteSheet(data);
+
+  var sprite = new createjs.Sprite(spriteSheet);
+  sprite.scaleX = 1.25;
+  sprite.scaleY = 1.25;
+  sprite.gotoAndPlay("heart");
+
+  sprite.name = "social";
+  stage.addChild(sprite);
+}
+
+/*
+	Adds a Tree.
+*/
+function addLiving(stage, image){
+
+	var data = {
+	  images: [image],
+	  frames: {width:96, height:96, regX:-3, regY:-200, spacing:0, margin:0},
+	  animations: {
+	  	spring: [0,2,"spring",0.05],	
+	  	fall: [3,4,"fall",0.05],	
+	  	winter:[5]
+    }
+  };
+
+  var spriteSheet = new createjs.SpriteSheet(data);
+
+  var sprite = new createjs.Sprite(spriteSheet);
+  sprite.scaleX = 1;
+  sprite.scaleY = 1;
+  sprite.gotoAndPlay("spring");
+
+  sprite.name = "living";
+  stage.addChild(sprite);
+}
+
 
 /*
 	Draws a nation as part of drawWorld().
