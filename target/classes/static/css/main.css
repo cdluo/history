@@ -1,5 +1,6 @@
 html, body{
     height: 100%;
+    background-image:url("http://www.templateof.com/postpic/2013/11/pink-parchment-paper-texture_374534.jpg");
 }
 
 h1{
@@ -43,6 +44,11 @@ canvas{
   /*box-shadow: 2px 2px 3px #000000;*/
   overflow-y:scroll;
   border:1px solid gray;
+}
+
+#credits{
+  position: absolute;
+  bottom:0;
 }
 
 .mes{

@@ -11,6 +11,15 @@
 <div id="canvasWorld">
 </div>
 
+<div id = "userBar">
+	<p>Controls</p>
+	<button> Button </button>
+</div>
+
+<!-- <div id="credits">
+	<p> Developed by Chris Luo </p>
+</div> -->
+
 <br>
 
 </#assign>

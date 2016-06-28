@@ -1,5 +1,6 @@
 html, body{
     height: 100%;
+    background-color: #E3D584;
     background-image:url("http://www.templateof.com/postpic/2013/11/pink-parchment-paper-texture_374534.jpg");
 }
 
@@ -25,11 +26,13 @@ canvas{
 
 #canvasWorld{
 	position:relative;
+  display:block;
 	top:25px;
 	display:block;
-	width:80%;
-	height:60%;
+	width:1408px;
 	margin: 0 auto;
+  overflow-y:auto;
+  border: 2px solid blue;
 }
 
 #events{
@@ -41,9 +44,25 @@ canvas{
   font-family: "Arial";
   font-size: 32px;
   resize:none;
-  /*box-shadow: 2px 2px 3px #000000;*/
+  box-shadow: 2px 2px 3px #000000;
   overflow-y:scroll;
-  border:1px solid gray;
+  border:2px solid gray;
+  background-color:white;
+}
+
+#credits{
+  position: relative;
+  left:10px;
+  top:25px;
+}
+
+#userBar{
+  position: fixed;
+  height: 100px;
+  width: 1410px;
+  border: 1px solid red;
+  bottom: 25px;
+  left: 10px;
 }
 
 .mes{

@@ -49,6 +49,7 @@ function drawWorld(){
 			var canv = document.createElement('canvas');
 			canv.id = curWorld[i].name;
 			canv.style.border = "1px solid #000000";
+			canv.style.margin = "8px 8px";
 
 			//Actual height
 			canv.width = 450;

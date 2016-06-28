@@ -11,6 +11,10 @@
 <div id="canvasWorld">
 </div>
 
+<div id="credits">
+	<p> Developed by Chris Luo </p>
+</div>
+
 <br>
 
 </#assign>
