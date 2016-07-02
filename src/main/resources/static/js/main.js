@@ -61,6 +61,22 @@ function drawWorld(){
 
 			document.getElementById("canvasWorld").appendChild(canv);
 			init(canv.id, curWorld[i]);		//Instantiate a stage for the new canvas.
+
+			//Add new nation to list in the events form
+
+			var nationsList = document.getElementById("nationsList");
+
+			nationsList.innerHTML = nationsList.innerHTML + curWorld[i].name;
+
+			var newInput = document.createElement('input');
+			newInput.type = "radio";
+			newInput.name = "nations";
+			newInput.classList.add("windowInput");
+			newInput.value = curWorld[i].name;
+			nationsList.appendChild(newInput);
+
+			var br = document.createElement('br');
+			nationsList.appendChild(br);
 		}	
 	}
 }

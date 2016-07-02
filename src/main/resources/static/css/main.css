@@ -30,7 +30,7 @@ canvas{
 	top:25px;
 	display:block;
 	width:1408px;
-  height: 325px;
+  height: 320px;
 	margin: 0 auto;
   overflow-y:scroll;
   border: 2px solid black;
@@ -84,13 +84,26 @@ canvas{
   position:relative;
   float:left;
   width:466px;
-  height:100px;
+  height:200px;
   background-color:gray;
   border: 1px solid black;
   top:200px;
   margin-right:2px;
   transition-duration: 0.5s;
   z-index:-1;
+  overflow-y:scroll;
+}
+
+.windowInput{
+  position: absolute;
+  right: 75px;
+}
+
+.windowSubmit{
+  position: relative;
+  top: 20px;
+  display:block;
+  margin:0 auto;
 }
 
 #addNationWindow{

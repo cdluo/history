@@ -49,7 +49,7 @@ function drawWorld(){
 			var canv = document.createElement('canvas');
 			canv.id = curWorld[i].name;
 			canv.style.border = "1px solid #000000";
-			canv.style.margin = "10px 10px";
+			canv.style.margin = "8px 8px";
 
 			//Actual height
 			canv.width = 450;
@@ -61,6 +61,22 @@ function drawWorld(){
 
 			document.getElementById("canvasWorld").appendChild(canv);
 			init(canv.id, curWorld[i]);		//Instantiate a stage for the new canvas.
+
+			//Add new nation to list in the events form
+
+			var nationsList = document.getElementById("nationsList");
+
+			nationsList.innerHTML = nationsList.innerHTML + curWorld[i].name;
+
+			var newInput = document.createElement('input');
+			newInput.type = "radio";
+			newInput.name = "nations";
+			newInput.classList.add("windowInput");
+			newInput.value = curWorld[i].name;
+			nationsList.appendChild(newInput);
+
+			var br = document.createElement('br');
+			nationsList.appendChild(br);
 		}	
 	}
 }
@@ -199,13 +215,6 @@ function init(canvas, nation){
 
 	social.onload =  addSprite(stage, data, 1, 1, "heart", "social");
 
-	// var socialLabel = new createjs.Text(nation.social, "24px Arial", "#000000");
-	// socialLabel.x = 125;
-	// socialLabel.y = 150;
-
-	// socialLabel.name = "socialLabel";
-	// stage.addChild(socialLabel);
-
 	////////////
 	// Living //
 	////////////
@@ -224,13 +233,6 @@ function init(canvas, nation){
   };
 
 	living.onload =  addSprite(stage, data, 0.8, 0.8, "spring", "living");
-
-	// var livingLabel = new createjs.Text(nation.living, "24px Arial", "#000000");
-	// livingLabel.x = 125;
-	// livingLabel.y = 230;
-
-	// livingLabel.name = "livingLabel";
-	// stage.addChild(livingLabel);
 }
 
 /*
@@ -296,7 +298,6 @@ function drawNation(nation){
 
 	livingBar1.name = "livingBar";
 	stage.addChild(livingBar1);
-	// stage.setChildIndex(livingBar1, 0);		//Sends to back, only if you want numbers.
 
 	//Labels
 	var popLabel = stage.getChildByName("popLabel");
@@ -304,12 +305,6 @@ function drawNation(nation){
 
 	var gdpLabel = stage.getChildByName("gdpLabel");
 	gdpLabel.text = nation.gdp;
-
-	// var socialLabel = stage.getChildByName("socialLabel");
-	// socialLabel.text = nation.social;
-
-	// var livingLabel = stage.getChildByName("livingLabel");
-	// livingLabel.text = nation.living;
 
 	//Animations
 	var bubble = stage.getChildByName("social");

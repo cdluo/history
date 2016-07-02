@@ -1,5 +1,6 @@
 html, body{
     height: 100%;
+    background-color: #E3D584;
     background-image:url("http://www.templateof.com/postpic/2013/11/pink-parchment-paper-texture_374534.jpg");
 }
 
@@ -25,11 +26,14 @@ canvas{
 
 #canvasWorld{
 	position:relative;
+  display:block;
 	top:25px;
 	display:block;
-	width:80%;
-	height:60%;
+	width:1408px;
+  height: 320px;
 	margin: 0 auto;
+  overflow-y:scroll;
+  border: 2px solid black;
 }
 
 #events{
@@ -41,14 +45,69 @@ canvas{
   font-family: "Arial";
   font-size: 32px;
   resize:none;
-  /*box-shadow: 2px 2px 3px #000000;*/
+  box-shadow: 2px 2px 3px #000000;
   overflow-y:scroll;
-  border:1px solid gray;
+  border:2px solid gray;
+  background-color:white;
 }
 
 #credits{
+  position: relative;
+  left:10px;
+  top:25px;
+}
+
+#userBar{
+  position: fixed;
+  height: 100px;
+  width: 1410px;
+  border: 2px solid black;
+  bottom: 25px;
+  left: 10px;
+  background-color: brown;
+  /*overflow-y:scroll;*/
+  z-index:1;
+}
+
+.userBtn{
+  position:fixed;
+  display:inline-block;
+  height:70px;
+  width:150px;
+  margin: 15px 150px;
+  font-family:"Arial";
+  font-size: 18px;
+
+}
+
+.userWindow{
+  position:relative;
+  float:left;
+  width:466px;
+  height:200px;
+  background-color:gray;
+  border: 1px solid black;
+  top:200px;
+  margin-right:2px;
+  transition-duration: 0.5s;
+  z-index:-1;
+  overflow-y:scroll;
+}
+
+.windowInput{
   position: absolute;
-  bottom:0;
+  right: 75px;
+}
+
+.windowSubmit{
+  position: relative;
+  top: 20px;
+  display:block;
+  margin:0 auto;
+}
+
+#addNationWindow{
+  /*z-index:-1;*/
 }
 
 .mes{

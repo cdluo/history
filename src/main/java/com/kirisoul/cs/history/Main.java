@@ -154,6 +154,8 @@ public class Main {
     Spark.post("/time", new TimeHandler());
     Spark.post("/timeline", new TimelineHandler());
     Spark.post("/year", new YearHandler());
+    Spark.post("/newNation", new NewNationHandler());
+    Spark.post("/newEvent", new NewEventHandler());
   }
 
   private class FrontHandler implements TemplateViewRoute {
@@ -184,6 +186,52 @@ public class Main {
   private class YearHandler implements Route {
     @Override
     public Object handle(Request req, Response res) {
+      
+      return GSON.toJson(world.getYear());
+    }
+  }
+  
+  private class NewNationHandler implements Route {
+    @Override
+    public Object handle(Request req, Response res) {
+      QueryParamsMap qm = req.queryMap();
+      String name = qm.value("name");
+      int pop = Integer.parseInt(qm.value("pop"));
+      int gdp = Integer.parseInt(qm.value("gdp"));
+      int social = Integer.parseInt(qm.value("social"));
+      int living = Integer.parseInt(qm.value("living"));
+      
+      System.out.println(name + pop + gdp + social + living);
+      
+      try {
+        world.addNation(name, pop, gdp, social, living);
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        System.out.println("ERROR: Couldn't add new nation.");
+        e.printStackTrace();
+      }
+      
+      return GSON.toJson(world.getYear());
+    }
+  }
+  
+  private class NewEventHandler implements Route {
+    @Override
+    public Object handle(Request req, Response res) {
+      QueryParamsMap qm = req.queryMap();
+      String type = qm.value("type");
+      int year = Integer.parseInt(qm.value("year"));
+      String to = qm.value("to");
+      
+      System.out.println(type + year + to);
+
+      try {
+        sqlDB.addEvent(year, type, to);
+      } catch (SQLException e) {
+        // TODO Auto-generated catch block
+        System.out.println("ERROR: Couldn't add new event.");
+        e.printStackTrace();
+      }
       
       return GSON.toJson(world.getYear());
     }
