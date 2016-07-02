@@ -12,13 +12,21 @@
 </div>
 
 <div id = "userBar">
-	<p>Controls</p>
-	<button> Button </button>
-</div>
+	<button class = "userBtn closed" id="addNation"> Add Nation </button>
+	<div class = "userWindow" id = "addNationWindow">
+		<p>New Nation</p>
+	</div>
 
-<!-- <div id="credits">
-	<p> Developed by Chris Luo </p>
-</div> -->
+	<button class = "userBtn closed" id="addEvent"> Add Event </button>
+	<div class = "userWindow" id = "addEventWindow">
+		<p>New Event</p>
+	</div>
+
+	<button class = "userBtn closed" id="stats"> Stats/Graphs </button>
+	<div class = "userWindow" id = "statsWindow">
+		<p>New Stats</p>
+	</div>
+</div>
 
 <br>
 

@@ -30,9 +30,10 @@ canvas{
 	top:25px;
 	display:block;
 	width:1408px;
+  height: 325px;
 	margin: 0 auto;
-  overflow-y:auto;
-  border: 2px solid blue;
+  overflow-y:scroll;
+  border: 2px solid black;
 }
 
 #events{
@@ -60,9 +61,40 @@ canvas{
   position: fixed;
   height: 100px;
   width: 1410px;
-  border: 1px solid red;
+  border: 2px solid black;
   bottom: 25px;
   left: 10px;
+  background-color: brown;
+  /*overflow-y:scroll;*/
+  z-index:1;
+}
+
+.userBtn{
+  position:fixed;
+  display:inline-block;
+  height:70px;
+  width:150px;
+  margin: 15px 150px;
+  font-family:"Arial";
+  font-size: 18px;
+
+}
+
+.userWindow{
+  position:relative;
+  float:left;
+  width:466px;
+  height:100px;
+  background-color:gray;
+  border: 1px solid black;
+  top:200px;
+  margin-right:2px;
+  transition-duration: 0.5s;
+  z-index:-1;
+}
+
+#addNationWindow{
+  /*z-index:-1;*/
 }
 
 .mes{

@@ -14,5 +14,6 @@
      <script src="https://code.createjs.com/easeljs-0.8.2.min.js"></script>
      <script src="https://code.createjs.com/tweenjs-0.6.2.min.js"></script>
      <script src="js/main.js"></script>
+     <script src="js/userBar.js"></script>
   </body>
 </html>

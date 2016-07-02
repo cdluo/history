@@ -199,13 +199,6 @@ function init(canvas, nation){
 
 	social.onload =  addSprite(stage, data, 1, 1, "heart", "social");
 
-	// var socialLabel = new createjs.Text(nation.social, "24px Arial", "#000000");
-	// socialLabel.x = 125;
-	// socialLabel.y = 150;
-
-	// socialLabel.name = "socialLabel";
-	// stage.addChild(socialLabel);
-
 	////////////
 	// Living //
 	////////////
@@ -224,13 +217,6 @@ function init(canvas, nation){
   };
 
 	living.onload =  addSprite(stage, data, 0.8, 0.8, "spring", "living");
-
-	// var livingLabel = new createjs.Text(nation.living, "24px Arial", "#000000");
-	// livingLabel.x = 125;
-	// livingLabel.y = 230;
-
-	// livingLabel.name = "livingLabel";
-	// stage.addChild(livingLabel);
 }
 
 /*
@@ -296,7 +282,6 @@ function drawNation(nation){
 
 	livingBar1.name = "livingBar";
 	stage.addChild(livingBar1);
-	// stage.setChildIndex(livingBar1, 0);		//Sends to back, only if you want numbers.
 
 	//Labels
 	var popLabel = stage.getChildByName("popLabel");
@@ -304,12 +289,6 @@ function drawNation(nation){
 
 	var gdpLabel = stage.getChildByName("gdpLabel");
 	gdpLabel.text = nation.gdp;
-
-	// var socialLabel = stage.getChildByName("socialLabel");
-	// socialLabel.text = nation.social;
-
-	// var livingLabel = stage.getChildByName("livingLabel");
-	// livingLabel.text = nation.living;
 
 	//Animations
 	var bubble = stage.getChildByName("social");
