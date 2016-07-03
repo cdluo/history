@@ -91,12 +91,44 @@ canvas{
   margin-right:2px;
   transition-duration: 0.5s;
   z-index:-1;
-  overflow-y:scroll;
 }
 
 .windowInput{
   position: absolute;
   right: 75px;
+}
+
+.dropBtn{
+  display:block;
+  position:relative;
+  left:20px;
+  margin: 15px 0;
+}
+
+#typeDropDown{
+  position: absolute;
+  visibility:hidden;
+  left: 20px;
+  top: 45px;
+  background-color:white;
+  z-index:1;
+}
+
+.typeRadio{
+  margin: 5px 0;
+}
+
+#nationDropDown{
+  position: absolute;
+  visibility:hidden;
+  left: 20px;
+  top: 165px;
+  background-color:white;
+  z-index:1;
+}
+
+.toRadio{
+  margin: 5px 0;
 }
 
 .windowSubmit{
@@ -106,8 +138,8 @@ canvas{
   margin:0 auto;
 }
 
-#addNationWindow{
-  /*z-index:-1;*/
+#submitYear{
+
 }
 
 .mes{

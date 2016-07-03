@@ -8,9 +8,11 @@ $( "#addNation" ).click(function() {
 	if(button.classList.contains("closed")){
 		button.classList.remove("closed");
 		document.getElementById("addNationWindow").style.transform = "translateY(-410px)";
+		button.innerHTML = "Cancel";
 	}else{
 		button.classList.add("closed");
 		document.getElementById("addNationWindow").style.transform = "translateY(0px)";
+		button.innerHTML = "Add Nation"
 	}
 });
 
@@ -22,9 +24,11 @@ $( "#addEvent" ).click(function() {
 	if(button.classList.contains("closed")){
 		button.classList.remove("closed");
 		document.getElementById("addEventWindow").style.transform = "translateY(-410px)";
+		button.innerHTML = "Cancel";
 	}else{
 		button.classList.add("closed");
 		document.getElementById("addEventWindow").style.transform = "translateY(0px)";
+		button.innerHTML = "Add Event";
 	}
 });
 
@@ -61,6 +65,7 @@ $("#newNationSubmit").click(function(){
 
 		document.getElementById("addNation").classList.add("closed");
 		document.getElementById("addNationWindow").style.transform = "translateY(0px)";
+		document.getElementById("addNation").innerHTML = "Add Nation"
 	})
 });
 
@@ -81,5 +86,9 @@ $("#newEventSubmit").click(function(){
 
 		document.getElementById("addEvent").classList.add("closed");
 		document.getElementById("addEventWindow").style.transform = "translateY(0px)";
+		document.getElementById("addEvent").innerHTML = "Add Event";
 	})
 });
+
+//How to control visibility
+// document.getElementById("nationDropDown").style.visibility = "visible";

@@ -34,25 +34,26 @@
 	<button class = "userBtn closed" id="addEvent"> Add Event </button>
 	<div class = "userWindow" id = "addEventWindow">
 		<div id = "newEventForm">
-		  <p style="margin:0 0; font:24px Arial">Type:</p>
+		  <button class="dropBtn">Type:</button>
 
-		  Natural Disaster<input type = "radio" name="type" class = "windowInput" value = "Natural Disaster" checked><br> 
-		  Election<input type = "radio" name="type" class = "windowInput" value = "Election"><br>
-		  Economic Downturn<input type = "radio" name="type" class = "windowInput" value = "Economic Downturn"><br>
-		  Economic Boom<input type = "radio" name="type" class = "windowInput" value = "Economic Boom"><br>
+		  <div id="typeDropDown">
+		  	<p class = "typeRadio">Natural Disaster</p>
+		  	<p class = "typeRadio">Election</p>
+		  	<p class = "typeRadio">Economic Downturn</p>
+		  	<p class = "typeRadio">Economic Boom</p>
+		  </div>
 
-		  <br>
-
-		  Year:
-		  <input type = "number" name="year" id="submitYear" class = "windowInput"> <br> 
-
-		  <br>
+		  <p style = "position:relative; left:20px; margin:5px 0; display:inline-block">Year:</p>
+		  <input type = "number" name="year" id="submitYear" class = "windowInput" style = "margin:10px 0;">
 
 		  <div id="nationsList">
-		  	To: <br>
+		  	<button class = "dropBtn">To: </button>
+		  	<div id="nationDropDown">
+
+		  	</div>
 			</div>
 
-		  <button id="newEventSubmit" class = "windowSubmit"> Submit </button>
+		  <button id="newEventSubmit" class = "windowSubmit" style = "top:0px"> Submit </button>
 		</div>
 	</div>
 

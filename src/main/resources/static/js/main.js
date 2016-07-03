@@ -64,19 +64,12 @@ function drawWorld(){
 
 			//Add new nation to list in the events form
 
-			var nationsList = document.getElementById("nationsList");
+			var nationsDrop = document.getElementById("nationDropDown");
 
-			nationsList.innerHTML = nationsList.innerHTML + curWorld[i].name;
-
-			var newInput = document.createElement('input');
-			newInput.type = "radio";
-			newInput.name = "nations";
-			newInput.classList.add("windowInput");
-			newInput.value = curWorld[i].name;
-			nationsList.appendChild(newInput);
-
-			var br = document.createElement('br');
-			nationsList.appendChild(br);
+			var newInput = document.createElement('p');
+			newInput.classList.add("toRadio");
+			newInput.innerHTML = curWorld[i].name;
+			nationsDrop.appendChild(newInput);
 		}	
 	}
 }
