@@ -55,28 +55,16 @@ function drawWorld(){
 			canv.width = 450;
 			canv.height = 300;
 
-			//Displayed height
-			// canv.style.width = "49%";
-			// canv.style.height = "75%";
-
 			document.getElementById("canvasWorld").appendChild(canv);
 			init(canv.id, curWorld[i]);		//Instantiate a stage for the new canvas.
 
 			//Add new nation to list in the events form
+			var nationsDrop = document.getElementById("nationDropDown");
 
-			var nationsList = document.getElementById("nationsList");
-
-			nationsList.innerHTML = nationsList.innerHTML + curWorld[i].name;
-
-			var newInput = document.createElement('input');
-			newInput.type = "radio";
-			newInput.name = "nations";
-			newInput.classList.add("windowInput");
-			newInput.value = curWorld[i].name;
-			nationsList.appendChild(newInput);
-
-			var br = document.createElement('br');
-			nationsList.appendChild(br);
+			var newInput = document.createElement('p');
+			newInput.classList.add("toRadio");
+			newInput.innerHTML = curWorld[i].name;
+			nationsDrop.appendChild(newInput);
 		}	
 	}
 }

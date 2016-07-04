@@ -34,31 +34,36 @@
 	<button class = "userBtn closed" id="addEvent"> Add Event </button>
 	<div class = "userWindow" id = "addEventWindow">
 		<div id = "newEventForm">
-		  <p style="margin:0 0; font:24px Arial">Type:</p>
+		  <button id="typeDropBtn" class="dropBtn">Type:</button>
 
-		  Natural Disaster<input type = "radio" name="type" class = "windowInput" value = "Natural Disaster" checked><br> 
-		  Election<input type = "radio" name="type" class = "windowInput" value = "Election"><br>
-		  Economic Downturn<input type = "radio" name="type" class = "windowInput" value = "Economic Downturn"><br>
-		  Economic Boom<input type = "radio" name="type" class = "windowInput" value = "Economic Boom"><br>
+		  <div class = "closed" id="typeDropDown">
+		  	<p class = "typeRadio">Natural Disaster</p>
+		  	<p class = "typeRadio">Election</p>
+		  	<p class = "typeRadio">Economic Downturn</p>
+		  	<p class = "typeRadio">Economic Boom</p>
+		  </div>
 
-		  <br>
+		  <p id="typeLabel"> --- </p>
 
-		  Year:
-		  <input type = "number" name="year" id="year" class = "windowInput"> <br> 
+		  <p style = "position:relative; left:75px; margin:5px 0; display:inline-block">Year:</p>
+		  <input type = "number" name="year" id="submitYear" class = "windowInput">
 
-		  <br>
+	  	<button id = "nationDropBtn" class = "dropBtn">To: </button>
 
-		  <div id="nationsList">
-		  	To: <br>
-			</div>
+	  	<div class = "closed" id="nationDropDown">
+	  		<!-- Nation labels are generated here in main.js-->
+	  		<p class = "toRadio">TEST</p>
+	  	</div>
 
-		  <button id="newEventSubmit" class = "windowSubmit"> Submit </button>
+			<p id="nationLabel"> --- </p>
+
+		  <button id="newEventSubmit" class = "windowSubmit" style = "top:0px"> Submit </button>
 		</div>
 	</div>
 
 	<button class = "userBtn closed" id="stats"> Stats/Graphs </button>
 	<div class = "userWindow" id = "statsWindow">
-		Stats
+		<p>Stats/Graphs</p>
 	</div>
 </div>
 

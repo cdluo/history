@@ -1,7 +1,8 @@
-//Window Animations
+///////////////////////
+// Window Animations //
+///////////////////////
 
 $( "#addNation" ).click(function() {
-	console.log("Adding Nation");
 
 	var button = document.getElementById("addNation");
 
@@ -17,7 +18,6 @@ $( "#addNation" ).click(function() {
 });
 
 $( "#addEvent" ).click(function() {
-  console.log("Adding Event...");
 
   var button = document.getElementById("addEvent");
 
@@ -33,7 +33,6 @@ $( "#addEvent" ).click(function() {
 });
 
 $( "#stats" ).click(function() {
-  console.log("Showing Stats...");
 
   var button = document.getElementById("stats");
 
@@ -46,7 +45,63 @@ $( "#stats" ).click(function() {
 	}
 });
 
-//Submit Buttons
+//////////////////////////
+// Event DropDown Menus //
+//////////////////////////
+
+$( "#typeDropBtn" ).click(function() {
+	var dropDown = document.getElementById("typeDropDown");
+
+	if(dropDown.classList.contains("closed")){
+		dropDown.style.visibility = "visible";
+		dropDown.classList.remove("closed");
+	}else{
+		dropDown.style.visibility = "hidden";
+		dropDown.classList.add("closed");
+	}
+});
+
+$( ".typeRadio" ).click(function() {
+
+	var label = document.getElementById("typeLabel");
+	var text = $(this).text();
+	label.innerHTML = text;
+
+	var dropDown = document.getElementById("typeDropDown");
+	dropDown.style.visibility = "hidden";
+	dropDown.classList.add("closed");
+});
+
+$( "#nationDropBtn" ).click(function() {
+	var dropDown = document.getElementById("nationDropDown");
+
+	if(dropDown.classList.contains("closed")){
+		dropDown.style.visibility = "visible";
+		dropDown.classList.remove("closed");
+	}else{
+		dropDown.style.visibility = "hidden";
+		dropDown.classList.add("closed");
+	}
+
+});
+
+$( "#nationDropDown" ).on("click", ".toRadio", function() {
+
+	console.log("clicked");
+
+	var label = document.getElementById("nationLabel");
+	var text = $(this).text();
+	label.innerHTML = text;
+
+	var dropDown = document.getElementById("nationDropDown");
+	dropDown.style.visibility = "hidden";
+	dropDown.classList.add("closed");
+
+});
+
+////////////////////
+// Submit Buttons //
+////////////////////
 
 $("#newNationSubmit").click(function(){
 
@@ -71,13 +126,11 @@ $("#newNationSubmit").click(function(){
 
 $("#newEventSubmit").click(function(){
 
-	console.log("Submitting new Nation...");
+	console.log("Submitting new Event...");
 
-	var typeJSON = ($('input[name=type]:checked').val());
+	var typeJSON = ($('#typeLabel').text());
 	var yearJSON = $("#submitYear").val();
-	var toJSON = ($('input[name=nations]:checked').val());
-
-	console.log(yearJSON);
+	var toJSON = ($('#nationLabel').text());
 
 	var data = {type:typeJSON, year:yearJSON, to:toJSON};
 
@@ -89,6 +142,3 @@ $("#newEventSubmit").click(function(){
 		document.getElementById("addEvent").innerHTML = "Add Event";
 	})
 });
-
-//How to control visibility
-// document.getElementById("nationDropDown").style.visibility = "visible";
