@@ -9,10 +9,13 @@
 </div>
 
 <div id="canvasWorld">
+	<!-- Each nation will get a canvas inserted here -->
+	<!-- Drawing done by CreateJS in main.js -->
 </div>
 
 <div id = "userBar">
 
+	<!-- New Nation -->
 	<button class = "userBtn closed" id="addNation"> Add Nation </button>
 	<div class = "userWindow" id = "addNationWindow">
 		<div id = "newNationForm">
@@ -31,6 +34,7 @@
 		</div>
 	</div>
 
+	<!-- New Event -->
 	<button class = "userBtn closed" id="addEvent"> Add Event </button>
 	<div class = "userWindow" id = "addEventWindow">
 		<div id = "newEventForm">
@@ -52,7 +56,6 @@
 
 	  	<div class = "closed" id="nationDropDown">
 	  		<!-- Nation labels are generated here in main.js-->
-	  		<p class = "toRadio">TEST</p>
 	  	</div>
 
 			<p id="nationLabel"> --- </p>
@@ -61,6 +64,7 @@
 		</div>
 	</div>
 
+	<!-- Stats -->
 	<button class = "userBtn closed" id="stats"> Stats/Graphs </button>
 	<div class = "userWindow" id = "statsWindow">
 		<p>Stats/Graphs</p>

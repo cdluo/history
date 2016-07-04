@@ -1,13 +1,31 @@
+/*
+ * CSS file for all the pages styling.
+ * 
+ * @author Chris Luo
+ */
+
 html, body{
-    height: 100%;
-    background-color: #E3D584;
-    background-image:url("http://www.templateof.com/postpic/2013/11/pink-parchment-paper-texture_374534.jpg");
+  height: 100%;
+  background-color: #E3D584;
+  background-image:url("http://www.templateof.com/postpic/2013/11/pink-parchment-paper-texture_374534.jpg");
+}
+
+@font-face {
+  font-family:Garamond;
+  src:url("Garamond.ttf");
+}
+
+@font-face {
+  font-family:Jacques;
+  src:url("Jacques.ttf");
 }
 
 h1{
+  font-family: Jacques;
+  font-size:48px;
 	display: inline-block;
-	margin-top:10px;
-	margin-bottom:0;
+  margin: 0 0;
+  text-shadow: 1px 1px 1px black;
 }
 
 #header{
@@ -20,64 +38,83 @@ h1{
 	left: 12px;
 }
 
+#events{
+  display:block;
+  margin:0 auto;
+  text-align:center;
+  width:600px;
+  height: 75px;
+  resize:none;
+  box-shadow: 2px 2px 3px #000000;
+  overflow-y:scroll;
+  border:2px solid #AB9A6C;
+  background-image:url("http://img15.deviantart.net/df70/i/2009/113/5/6/western_parchment_paper_by_fish_hook.jpg");
+}
+
+/* The actual messages that go into the event window */
+.mes{
+  font-family:Jacques;
+  font-size:25px;
+  margin:20px 0;
+}
+
+.black{
+  color:black;
+}
+
+.red{
+  color:#ff3333;
+}
+
+.white{
+  color:white;
+}
+
+.green{
+  color:green;
+}
+
+.blue{
+  color:#ffa64d;
+}
+
+/*********/
+
 canvas{
 	text-align:left;
 }
 
 #canvasWorld{
-	position:relative;
-  display:block;
-	top:25px;
-	display:block;
-	width:1408px;
-  height: 320px;
+	position: relative;
+  display: block;
+	top: 15px;
+	width: 1408px;
+  height: 425px;
 	margin: 0 auto;
-  overflow-y:scroll;
+  overflow-y: scroll;
   border: 2px solid black;
-}
-
-#events{
-  display:block;
-  margin:0 auto;
-  text-align:center;
-  width:60%;
-  height: 100px;
-  font-family: "Arial";
-  font-size: 32px;
-  resize:none;
-  box-shadow: 2px 2px 3px #000000;
-  overflow-y:scroll;
-  border:2px solid gray;
-  background-color:white;
-}
-
-#credits{
-  position: relative;
-  left:10px;
-  top:25px;
 }
 
 #userBar{
   position: fixed;
-  height: 100px;
+  height: 75px;
   width: 1410px;
   border: 2px solid black;
   bottom: 25px;
   left: 10px;
-  background-color: brown;
-  /*overflow-y:scroll;*/
+  background-image:url("http://bgfons.com/upload/velvet_texture1773.jpg");
+  background-repeat: no-repeat;
   z-index:0;
 }
 
 .userBtn{
   position:fixed;
   display:inline-block;
-  height:70px;
+  height:50px;
   width:150px;
   margin: 15px 150px;
   font-family:"Arial";
   font-size: 18px;
-
 }
 
 .userWindow{
@@ -152,7 +189,6 @@ canvas{
   margin-left:10px;
   width:180px;
   cursor:pointer;
-  /*z-index:10;*/
 }
 
 .toRadio:hover{
@@ -183,26 +219,6 @@ canvas{
   z-index:2;
 }
 
-.mes{
-	font-family:"Arial";
-}
 
-.black{
-  color:black;
-}
 
-.red{
-  color:#ff3333;
-}
 
-.white{
-  color:white;
-}
-
-.green{
-  color:#66ff99;
-}
-
-.blue{
-  color:#ffa64d;
-}

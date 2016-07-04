@@ -1,103 +1,97 @@
+/*
+ * This Javascript file controls everything to do with the userbar,
+ * including its window animations, dropdown menus, and post requests
+ * to the server.
+ * 
+ * @author Chris Luo
+ */
+
 ///////////////////////
 // Window Animations //
 ///////////////////////
 
 $( "#addNation" ).click(function() {
-
 	var button = document.getElementById("addNation");
+	var buttonWindow = document.getElementById("addNationWindow");
 
-	if(button.classList.contains("closed")){
-		button.classList.remove("closed");
-		document.getElementById("addNationWindow").style.transform = "translateY(-410px)";
-		button.innerHTML = "Cancel";
-	}else{
-		button.classList.add("closed");
-		document.getElementById("addNationWindow").style.transform = "translateY(0px)";
-		button.innerHTML = "Add Nation"
-	}
+	controlWindow(button, buttonWindow, "Add Nation");
 });
 
 $( "#addEvent" ).click(function() {
-
   var button = document.getElementById("addEvent");
+  var buttonWindow = document.getElementById("addEventWindow");
 
-	if(button.classList.contains("closed")){
-		button.classList.remove("closed");
-		document.getElementById("addEventWindow").style.transform = "translateY(-410px)";
-		button.innerHTML = "Cancel";
-	}else{
-		button.classList.add("closed");
-		document.getElementById("addEventWindow").style.transform = "translateY(0px)";
-		button.innerHTML = "Add Event";
-	}
+	controlWindow(button, buttonWindow, "Add Event");
 });
 
 $( "#stats" ).click(function() {
-
   var button = document.getElementById("stats");
+  var buttonWindow = document.getElementById("statsWindow")
 
+  controlWindow(button, buttonWindow, "Stats");
+});
+
+function controlWindow(button, buttonWindow, label){
 	if(button.classList.contains("closed")){
 		button.classList.remove("closed");
-		document.getElementById("statsWindow").style.transform = "translateY(-410px)";
+		buttonWindow.style.transform = "translateY(-410px)";
+		button.innerHTML = "Cancel";
 	}else{
 		button.classList.add("closed");
-		document.getElementById("statsWindow").style.transform = "translateY(0px)";
+		buttonWindow.style.transform = "translateY(0px)";
+		button.innerHTML = label;
 	}
-});
+}
 
 //////////////////////////
 // Event DropDown Menus //
 //////////////////////////
 
 $( "#typeDropBtn" ).click(function() {
-	var dropDown = document.getElementById("typeDropDown");
+	var dropWindow = document.getElementById("typeDropDown");
+	dropDown(dropWindow);
+});
 
-	if(dropDown.classList.contains("closed")){
-		dropDown.style.visibility = "visible";
-		dropDown.classList.remove("closed");
-	}else{
-		dropDown.style.visibility = "hidden";
-		dropDown.classList.add("closed");
-	}
+$( "#nationDropBtn" ).click(function() {
+	var dropWindow = document.getElementById("nationDropDown");
+	dropDown(dropWindow);
 });
 
 $( ".typeRadio" ).click(function() {
 
 	var label = document.getElementById("typeLabel");
 	var text = $(this).text();
-	label.innerHTML = text;
-
 	var dropDown = document.getElementById("typeDropDown");
-	dropDown.style.visibility = "hidden";
-	dropDown.classList.add("closed");
-});
 
-$( "#nationDropBtn" ).click(function() {
-	var dropDown = document.getElementById("nationDropDown");
-
-	if(dropDown.classList.contains("closed")){
-		dropDown.style.visibility = "visible";
-		dropDown.classList.remove("closed");
-	}else{
-		dropDown.style.visibility = "hidden";
-		dropDown.classList.add("closed");
-	}
+	confirmRadio(label, text, dropDown);
 
 });
 
 $( "#nationDropDown" ).on("click", ".toRadio", function() {
 
-	console.log("clicked");
-
 	var label = document.getElementById("nationLabel");
 	var text = $(this).text();
+	var dropDown = document.getElementById("nationDropDown");
+
+	confirmRadio(label, text, dropDown);
+});
+
+function dropDown(dropWindow){
+	if(dropWindow.classList.contains("closed")){
+		dropWindow.style.visibility = "visible";
+		dropWindow.classList.remove("closed");
+	}else{
+		dropWindow.style.visibility = "hidden";
+		dropWindow.classList.add("closed");
+	}
+}
+
+function confirmRadio(label, text, dropDown){
 	label.innerHTML = text;
 
-	var dropDown = document.getElementById("nationDropDown");
 	dropDown.style.visibility = "hidden";
 	dropDown.classList.add("closed");
-
-});
+}
 
 ////////////////////
 // Submit Buttons //
@@ -116,7 +110,6 @@ $("#newNationSubmit").click(function(){
 	var data = {name:nameJSON, pop:popJSON, gdp:gdpJSON, social:socialJSON, living:livingJSON};
 
 	$.post("/newNation", data, function(response) {
-		//Do stuff after adding new nation
 
 		document.getElementById("addNation").classList.add("closed");
 		document.getElementById("addNationWindow").style.transform = "translateY(0px)";
@@ -135,7 +128,6 @@ $("#newEventSubmit").click(function(){
 	var data = {type:typeJSON, year:yearJSON, to:toJSON};
 
 	$.post("/newEvent", data, function(response) {
-		//Do stuff after adding new Event
 
 		document.getElementById("addEvent").classList.add("closed");
 		document.getElementById("addEventWindow").style.transform = "translateY(0px)";

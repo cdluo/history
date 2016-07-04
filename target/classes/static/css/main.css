@@ -1,10 +1,27 @@
+/*
+ * CSS file for all the pages styling.
+ * 
+ * @author Chris Luo
+ */
+
 html, body{
-    height: 100%;
-    background-color: #E3D584;
-    background-image:url("http://www.templateof.com/postpic/2013/11/pink-parchment-paper-texture_374534.jpg");
+  height: 100%;
+  background-color: #E3D584;
+  background-image:url("http://www.templateof.com/postpic/2013/11/pink-parchment-paper-texture_374534.jpg");
+}
+
+@font-face {
+  font-family:Garamond;
+  src:url("Garamond.ttf");
+}
+
+@font-face {
+  font-family:Jacques;
+  src:url("Jacques.ttf");
 }
 
 h1{
+  font-family: Jacques;
 	display: inline-block;
 	margin-top:10px;
 	margin-bottom:0;
@@ -42,7 +59,7 @@ canvas{
   text-align:center;
   width:60%;
   height: 100px;
-  font-family: "Arial";
+  font-family: "Garamond";
   font-size: 32px;
   resize:none;
   box-shadow: 2px 2px 3px #000000;
@@ -103,6 +120,7 @@ canvas{
   position:relative;
   left:75px;
   margin: 15px 0;
+  cursor:pointer;
 }
 
 #typeDropDown{
@@ -115,7 +133,7 @@ canvas{
   box-shadow: 2px 2px 2px black;
   overflow-y:scroll;
   height:100px;
-  z-index:1;
+  z-index:3;
 }
 
 .typeRadio{
@@ -141,7 +159,7 @@ canvas{
   box-shadow: 2px 2px 2px black;
   overflow-y:scroll;
   height:100px;
-  z-index:1;
+  z-index:3;
 }
 
 .toRadio{
@@ -151,7 +169,6 @@ canvas{
   margin-left:10px;
   width:180px;
   cursor:pointer;
-  /*z-index:10;*/
 }
 
 .toRadio:hover{
@@ -176,6 +193,10 @@ canvas{
   display:block;
   margin:0 auto;
   z-index:-1;
+}
+
+#newEventSubmit{
+  z-index:2;
 }
 
 .mes{
