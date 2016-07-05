@@ -3,6 +3,7 @@ package com.kirisoul.cs.history.world;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.kirisoul.cs.history.database.SQLQuery;
 import com.kirisoul.cs.history.entities.Nation;
@@ -139,7 +140,7 @@ public class World {
    */
   public List<Nation> buildNations() throws SQLException{
     
-    List<Nation> nations1 = new ArrayList<Nation>();
+    List<Nation> nations1 = new CopyOnWriteArrayList<Nation>();
     
     for(String name: query.getNationNames()){
       Nation n = new Nation(name, query.queryPop(name), query.queryGdp(name),

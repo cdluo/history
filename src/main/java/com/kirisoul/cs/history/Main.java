@@ -201,8 +201,6 @@ public class Main {
       int social = Integer.parseInt(qm.value("social"));
       int living = Integer.parseInt(qm.value("living"));
       
-      System.out.println(name + pop + gdp + social + living);
-      
       try {
         world.addNation(name, pop, gdp, social, living);
       } catch (SQLException e) {
