@@ -1,7 +1,7 @@
 <#assign content>
 
 <div id="header">
-	<h1> ${header}: </h1> <h1 id="year"> X </h1>
+	<h1> ${header}: </h1> <h1 id="year"> X </h1> <canvas id="clock" class = "running"> </canvas>
 </div>
 
 <div id="events">
@@ -38,7 +38,7 @@
 		<div id = "newEventForm">
 		  <button id="typeDropBtn" class="dropBtn">Type:</button>
 
-		  <div class = "closed" id="typeDropDown">
+		  <div class = "dropDown closed" id="typeDropDown">
 		  	<p class = "typeRadio">Natural Disaster</p>
 		  	<p class = "typeRadio">Election</p>
 		  	<p class = "typeRadio">Economic Downturn</p>
@@ -47,12 +47,12 @@
 
 		  <p id="typeLabel">-----------------</p>
 
-		  <p class = "windowLabel">Year:</p>
+		  <p class = "windowLabel" style = "left: 50px">Year:</p>
 		  <input type = "number" name="year" id="submitYear" class = "windowInput" style = "right:45px">
 
 	  	<button id = "nationDropBtn" class = "dropBtn">To: </button>
 
-	  	<div class = "closed" id="nationDropDown">
+	  	<div class = "dropDown closed" id="nationDropDown">
 	  		<!-- Nation labels are generated here in main.js-->
 	  	</div>
 

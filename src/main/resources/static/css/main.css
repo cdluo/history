@@ -12,11 +12,6 @@ html, body{
 }
 
 @font-face {
-  font-family:Garamond;
-  src:url("Garamond.ttf");
-}
-
-@font-face {
   font-family:Jacques;
   src:url("Jacques.ttf");
 }
@@ -36,6 +31,15 @@ h1{
 #year{
 	position: relative;
 	left: 12px;
+}
+
+#clock{
+  position:relative;
+  top: -10px;
+  left: 25px;
+  height: 50px;
+  width: 50px;
+  background-color:black;
 }
 
 #events{
@@ -122,7 +126,6 @@ canvas{
   margin:12px 0;
   border: 1px solid black;
   border-radius:10px;
-  background-color:white;
   box-shadow: 2px 2px 2px black;
 }
 
@@ -189,21 +192,23 @@ canvas{
   font-family:Garamond;
   border-radius: 10px;
   border: 1px solid black;
-  background-color:white;
 }
 
-#typeDropDown{
+.dropDown{
   position: absolute;
   visibility:hidden;
   left: 20px;
-  top: 50px;
-  background-color:white;
   width:200px;
   box-shadow: 2px 2px 2px black;
   overflow-y:scroll;
   height:100px;
   z-index:3;
   border-radius:5px;
+  background-color:white;
+}
+
+#typeDropDown{
+  top: 52px;
 }
 
 .typeRadio{
@@ -220,17 +225,7 @@ canvas{
 }
 
 #nationDropDown{
-  position: absolute;
-  visibility:hidden;
-  left: 20px;
-  top: 155px;
-  background-color:white;
-  width:200px;
-  box-shadow: 2px 2px 2px black;
-  overflow-y:scroll;
-  height:100px;
-  z-index:3;
-  border-radius:5px;
+  top: 160px;
 }
 
 .toRadio{
@@ -266,6 +261,7 @@ canvas{
 
 button{
   transition-duration: 0.3s;
+  background-color:#F0FBFF;
 }
 
 button:focus {
@@ -273,5 +269,5 @@ button:focus {
 }
 
 button:hover{
-  background-color:#ED749D;
+  background-color:#36F57C;
 }
