@@ -16,27 +16,25 @@
 <div id = "userBar">
 
 	<!-- New Nation -->
-	<button class = "userBtn closed" id="addNation"> Add Nation </button>
-	<div class = "userWindow" id = "addNationWindow">
+	<button class = "userBtn closed" id="addNation" style = "left:240px"> Add Nation </button>
+
+	<div class = "userWindow" id = "addNationWindow" style = "left:140px">
 		<div id = "newNationForm">
-		  Name:
-		  <input type = "text" name="name" id="name" class = "windowInput"> <br>
-		  Population:
-		  <input type = "number" name="pop" id="pop" class = "windowInput"> <br>
-		  GDP:
-		  <input type = "number" name="gdp" id="gdp" class = "windowInput"> <br>
-		  Social Stability:
-		  <input type = "number" name="social" id="social" class = "windowInput"> <br>
-		  Standard of Living:
-		  <input type = "number" name="living" id="living" class = "windowInput"> <br>
+			<p class = "windowTopfiller"></p>
+		  <p class = "windowLabel"> Name: </p> <input type = "text" name="name" id="name" class = "windowInput"> <br>
+		  <p class = "windowLabel"> Population: </p> <input type = "number" name="pop" id="pop" class = "windowInput"> <br>
+		  <p class = "windowLabel"> GDP: </p> <input type = "number" name="gdp" id="gdp" class = "windowInput"> <br>
+		  <p class = "windowLabel"> Social Stability: </p> <input type = "number" name="social" id="social" class = "windowInput"> <br>
+		  <p class = "windowLabel"> Standard of Living: </p> <input type = "number" name="living" id="living" class = "windowInput"> <br>
 
 		  <button id = "newNationSubmit" class = "windowSubmit"> Submit </button>
 		</div>
 	</div>
 
 	<!-- New Event -->
-	<button class = "userBtn closed" id="addEvent"> Add Event </button>
-	<div class = "userWindow" id = "addEventWindow">
+	<button class = "userBtn closed" id="addEvent" style = "left: 630px"> Add Event </button>
+
+	<div class = "userWindow" id = "addEventWindow" style = "left:530px">
 		<div id = "newEventForm">
 		  <button id="typeDropBtn" class="dropBtn">Type:</button>
 
@@ -47,10 +45,10 @@
 		  	<p class = "typeRadio">Economic Boom</p>
 		  </div>
 
-		  <p id="typeLabel"> --- </p>
+		  <p id="typeLabel">-----------------</p>
 
-		  <p style = "position:relative; left:75px; margin:5px 0; display:inline-block">Year:</p>
-		  <input type = "number" name="year" id="submitYear" class = "windowInput">
+		  <p class = "windowLabel">Year:</p>
+		  <input type = "number" name="year" id="submitYear" class = "windowInput" style = "right:45px">
 
 	  	<button id = "nationDropBtn" class = "dropBtn">To: </button>
 
@@ -58,16 +56,15 @@
 	  		<!-- Nation labels are generated here in main.js-->
 	  	</div>
 
-			<p id="nationLabel"> --- </p>
+			<p id="nationLabel">-----------------</p>
 
-		  <button id="newEventSubmit" class = "windowSubmit" style = "top:0px"> Submit </button>
+		  <button id="newEventSubmit" class = "windowSubmit"> Submit </button>
 		</div>
 	</div>
 
 	<!-- Stats -->
-	<button class = "userBtn closed" id="stats"> Stats/Graphs </button>
-	<div class = "userWindow" id = "statsWindow">
-		<p>Stats/Graphs</p>
+	<button class = "userBtn closed" id="stats" style = "left: 1020px"> Stats/Graphs </button>
+	<div class = "userWindow" id = "statsWindow" style = "left:920px">
 	</div>
 </div>
 
