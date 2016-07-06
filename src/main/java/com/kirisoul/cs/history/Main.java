@@ -85,8 +85,6 @@ public class Main {
       System.exit(1);
     }
     
-    timer = new Timer();
-    
     try{
       world = new World(db);
     }catch(SQLException | ClassNotFoundException e){
@@ -96,6 +94,7 @@ public class Main {
     
     sqlDB = new SQLQuery(db);
     
+    timer = new Timer();
     time = new Time(world);
     timer.schedule(time, DELAY, SECOND);
 
@@ -112,23 +111,23 @@ public class Main {
 //      EventGenerator eg = new EventGenerator(q);
 //      eg.generate();
       
-      Nation test = new Nation("test", 100000, 4000, 100, 100);
+//      Nation test = new Nation("test", 100000, 4000, 100, 100);
+//      
+//      EventInterpreter eI = new EventInterpreter();
+//      Event e = new Event(100, "Economic Boom", "test");
+//      eI.interpret(e);
+//      
+//      test.eventPop(eI.getPop());
+//      test.eventGdp(eI.getGdp());
+//      test.eventSocial(eI.getSocial());
+//      test.eventLiving(eI.getLiving());
+//      
+//      test.passTime();
+//      
+//      System.out.println(test.toString());
       
-      EventInterpreter eI = new EventInterpreter();
-      Event e = new Event(100, "Economic Boom", "test");
-      eI.interpret(e);
-      
-      test.eventPop(eI.getPop());
-      test.eventGdp(eI.getGdp());
-      test.eventSocial(eI.getSocial());
-      test.eventLiving(eI.getLiving());
-      
-      test.passTime();
-      
-      System.out.println(test.toString());
-      
-      System.out.println("Done");
-      System.exit(0);
+//      System.out.println("Done");
+//      System.exit(0);
     }
   }
 
@@ -156,6 +155,8 @@ public class Main {
     Spark.post("/year", new YearHandler());
     Spark.post("/newNation", new NewNationHandler());
     Spark.post("/newEvent", new NewEventHandler());
+    Spark.post("/stopTime", new StopTimeHandler());
+    Spark.post("/resumeTime", new ResumeTimeHandler());
   }
 
   private class FrontHandler implements TemplateViewRoute {
@@ -230,6 +231,26 @@ public class Main {
         System.out.println("ERROR: Couldn't add new event.");
         e.printStackTrace();
       }
+      
+      return GSON.toJson(world.getYear());
+    }
+  }
+  
+  private class StopTimeHandler implements Route {
+    @Override
+    public Object handle(Request req, Response res) {
+      timer.cancel();
+      
+      return GSON.toJson(world.getYear());
+    }
+  }
+  
+  private class ResumeTimeHandler implements Route {
+    @Override
+    public Object handle(Request req, Response res) {
+      timer = new Timer();
+      time = new Time(world);
+      timer.schedule(time, DELAY, SECOND);
       
       return GSON.toJson(world.getYear());
     }

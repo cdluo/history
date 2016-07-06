@@ -10,6 +10,7 @@ var curWorld;
 var timeline;
 var year;
 var canvStgMap = new Array();		//Associative Array (Dictionary) for linking a canvas id to its stage.
+var timeout;
 
 /*
 	Central time keeping function. Essentially the page's Main().
@@ -32,8 +33,28 @@ function passTime(){
 		document.getElementById("year").innerHTML = year;
 	});
 
-	setTimeout(passTime,1000);	//Must match timer.schedule in Main
+	timeout = setTimeout(passTime,1000);	//Must match timer.schedule in Main
 }
+
+$( "#clock" ).click(function() {
+
+	if(this.classList.contains("running")){
+		clearTimeout(timeout);
+		this.classList.remove("running");
+		$.post("/stopTime", function(response) {
+			var year = JSON.parse(response);
+			console.log("Time stopped on " + year + ".");
+		});
+	}else{
+		timeout = setTimeout(passTime,1000);
+		this.classList.add("running");
+		$.post("/resumeTime", function(response) {
+			var year = JSON.parse(response);
+			console.log("Time resumed on " + year + ".");
+		});
+	}
+	
+});
 
 /*
 	Called during each post to "/time".
@@ -365,7 +386,7 @@ function scrollEvents(){
 }
 
 /*
-	Begins the script like the main method.
+	.
 */
-passTime();
+window.onload = passTime();
 

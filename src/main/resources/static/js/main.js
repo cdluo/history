@@ -11,6 +11,7 @@ var timeline;
 var year;
 var canvStgMap = new Array();		//Associative Array (Dictionary) for linking a canvas id to its stage.
 var timeout;
+var clockStage;		//For controlling the top clock animation, will be instantiated at the bottom.
 
 /*
 	Central time keeping function. Essentially the page's Main().
@@ -37,16 +38,23 @@ function passTime(){
 }
 
 $( "#clock" ).click(function() {
-	console.log(this.classList);
 
 	if(this.classList.contains("running")){
 		clearTimeout(timeout);
 		this.classList.remove("running");
-		//Stop the backend
+		$.post("/stopTime", function(response) {
+			var year = JSON.parse(response);
+			console.log("Time stopped on " + year + ".");
+			clockStage.getChildByName("flower").stop();
+		});
 	}else{
 		timeout = setTimeout(passTime,1000);
 		this.classList.add("running");
-		//resume the backend
+		$.post("/resumeTime", function(response) {
+			var year = JSON.parse(response);
+			console.log("Time resumed on " + year + ".");
+		});
+		clockStage.getChildByName("flower").play();
 	}
 	
 });
@@ -381,7 +389,27 @@ function scrollEvents(){
 }
 
 /*
-	Begins the script like the main method.
+	Executed on page load.
 */
-passTime();
+clockStage = new createjs.Stage(document.getElementById("clock"));
+	createjs.Ticker.on("tick", handleTick);
+  createjs.Ticker.framerate = 30;
+    function handleTick(event) {
+        clockStage.update(event);
+    }
+
+var flower = new Image();
+flower.src = "images/FlowerSheet.png";
+
+var data = {
+	  images: [flower],
+	  frames: {width:50, height:50, regX:0, regY:0, spacing:0, margin:0},
+	  animations: {
+	  	life: [0,30,"life",0.2],	
+    }
+};
+
+addSprite(clockStage, data, 1, 1, "life", "flower");
+
+window.onload = passTime();
 

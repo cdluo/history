@@ -8,7 +8,7 @@ html, body{
   height: 100%;
   background-color: #E3D584;
   /*Figure out how to load faster*/
-  /*background-image:url("http://www.templateof.com/postpic/2013/11/pink-parchment-paper-texture_374534.jpg");*/
+  background-image:url("http://www.templateof.com/postpic/2013/11/pink-parchment-paper-texture_374534.jpg");
 }
 
 @font-face {
@@ -37,9 +37,7 @@ h1{
   position:relative;
   top: -10px;
   left: 25px;
-  height: 50px;
-  width: 50px;
-  background-color:black;
+  cursor:pointer;
 }
 
 #events{
@@ -85,7 +83,7 @@ h1{
   color:#ffa64d;
 }
 
-/*********/
+/*----------------------*/
 
 canvas{
 	text-align:left;
