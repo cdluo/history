@@ -55,7 +55,6 @@ public class Main {
   }
 
   private String[] args;
-  private String db;
   private SQLQuery sqlDB;
   
   private World world;
@@ -73,34 +72,34 @@ public class Main {
   }
 
   private void run() throws SQLException, ClassNotFoundException {
-    OptionParser parser = new OptionParser();
-
-    parser.accepts("gui");
-    OptionSpec<String> database = parser.nonOptions().ofType(String.class);
-    OptionSet options = parser.parse(args);
-    
-    db = options.valueOf(database);
-    if(db == null){
-      System.out.println("Please specify the location of a sqlite3 db after ./run");
-      System.exit(1);
-    }
+//    OptionParser parser = new OptionParser();
+//
+//    parser.accepts("gui");
+//    OptionSpec<String> database = parser.nonOptions().ofType(String.class);
+//    OptionSet options = parser.parse(args);
+//    
+//    db = options.valueOf(database);
+//    if(db == null){
+//      System.out.println("Please specify the location of a sqlite3 db after ./run");
+//      System.exit(1);
+//    }
     
     try{
-      world = new World(db);
+      world = new World();
     }catch(SQLException | ClassNotFoundException e){
-      System.out.println("ERROR: Could not open database");
+      e.printStackTrace();
       System.exit(1); 
     }
     
-    sqlDB = new SQLQuery(db);
+    sqlDB = new SQLQuery();
     
     timer = new Timer();
     time = new Time(world);
     timer.schedule(time, DELAY, SECOND);
 
-    if (options.has("gui")) {
+//    if (options.has("gui")) {
       runSparkServer();
-    } else {
+//    } else {
       // Terminal
       // Use to Edit DB (update methods in SQLQuery)
       
@@ -128,7 +127,7 @@ public class Main {
       
 //      System.out.println("Done");
 //      System.exit(0);
-    }
+//    }
   }
 
   private static FreeMarkerEngine createEngine() {
@@ -142,9 +141,23 @@ public class Main {
     }
     return new FreeMarkerEngine(config);
   }
+  
+  /**
+   * From the Spark Heroku Tutorial.
+   * @return
+   */
+  static int getHerokuAssignedPort() {
+    ProcessBuilder processBuilder = new ProcessBuilder();
+    if (processBuilder.environment().get("PORT") != null) {
+        return Integer.parseInt(processBuilder.environment().get("PORT"));
+    }
+    return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+  }
 
   private void runSparkServer() {
     Spark.externalStaticFileLocation("src/main/resources/static");
+    
+    Spark.setPort(getHerokuAssignedPort());
 
     FreeMarkerEngine freeMarker = createEngine();
 
@@ -163,7 +176,7 @@ public class Main {
     @Override
     public ModelAndView handle(Request req, Response res) {
       Map<String, Object> variables =
-        ImmutableMap.of("title", "History", "header", db);
+        ImmutableMap.of("title", "History", "header", "Earth");
       return new ModelAndView(variables, "query.ftl");
     }
   }

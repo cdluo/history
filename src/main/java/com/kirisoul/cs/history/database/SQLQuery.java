@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.kirisoul.cs.history.events.Event;
+import org.postgresql.Driver;
 
 public class SQLQuery {
   
@@ -27,13 +28,29 @@ public class SQLQuery {
    * @throws SQLException
    *           exception
    */
-  public SQLQuery(String db) throws ClassNotFoundException, SQLException {
-    Class.forName("org.sqlite.JDBC");
-    String urlToDB = "jdbc:sqlite:" + db;
-    conn = DriverManager.getConnection(urlToDB);
+  public SQLQuery() throws ClassNotFoundException, SQLException {
+    
+    try {
+      Class.forName("org.postgresql.Driver");
+    } catch (ClassNotFoundException e) {
+      System.out.println("Where is your PostgreSQL JDBC Driver? "
+          + "Include in your library path!");
+      e.printStackTrace();
+      return;
+    }
+    
+    try {
+      conn = DriverManager.getConnection(
+          "jdbc:postgresql://127.0.0.1:5432/world1", "ChrisLuo",
+          "123456");
+    } catch (SQLException e) {
+      System.out.println("Connection Failed! Check output console");
+      e.printStackTrace();
+      return;
+    }
 
-    Statement stat = conn.createStatement();
-    stat.executeUpdate("PRAGMA foreign_keys = ON;");
+//    Statement stat = conn.createStatement();
+//    stat.executeUpdate("PRAGMA foreign_keys = ON;");
   }
   
   /**
@@ -62,7 +79,7 @@ public class SQLQuery {
    * @throws SQLException exception
    */
   public List<String> getNationNames() throws SQLException {
-    String query = "SELECT Name FROM Nations";
+    String query = "SELECT Name FROM nations;";
 
     PreparedStatement prep = conn.prepareStatement(query);
 
@@ -88,14 +105,17 @@ public class SQLQuery {
    * @throws SQLException exception
    */
   public int queryPop(String name) throws SQLException {
-    String query = "SELECT Pop FROM Nations WHERE " + "name = ?";
+    String query = "SELECT Pop FROM Nations WHERE " + "Name = ?";
 
     PreparedStatement prep = conn.prepareStatement(query);
     prep.setString(1, name);
 
     ResultSet rs = prep.executeQuery();
-
+    
+    rs.next();
     int pop = rs.getInt(1);
+    
+    System.out.println(pop);
 
     rs.close();
     prep.close();
@@ -117,6 +137,7 @@ public class SQLQuery {
 
     ResultSet rs = prep.executeQuery();
 
+    rs.next();
     int gdp = rs.getInt(1);
 
     rs.close();
@@ -139,6 +160,7 @@ public class SQLQuery {
 
     ResultSet rs = prep.executeQuery();
 
+    rs.next();
     int gdp = rs.getInt(1);
 
     rs.close();
@@ -161,6 +183,7 @@ public class SQLQuery {
 
     ResultSet rs = prep.executeQuery();
 
+    rs.next();
     int gdp = rs.getInt(1);
 
     rs.close();
@@ -256,6 +279,7 @@ public class SQLQuery {
 
     ResultSet rs = prep.executeQuery();
     
+    rs.next();
     int year = rs.getInt(1);
     rs.close();
     prep.close();

@@ -31,8 +31,8 @@ public class World {
    * @throws ClassNotFoundException exception
    * @throws SQLException exception
    */
-  public World(String db) throws ClassNotFoundException, SQLException{
-    query = new SQLQuery(db);
+  public World() throws ClassNotFoundException, SQLException{
+    query = new SQLQuery();
     nations = buildNations();
     eventGen = new EventGenerator(query);
     eventInterpret = new EventInterpreter();
