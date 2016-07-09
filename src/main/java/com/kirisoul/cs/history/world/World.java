@@ -1,5 +1,6 @@
 package com.kirisoul.cs.history.world;
 
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +31,9 @@ public class World {
    * @param db the sqlite database
    * @throws ClassNotFoundException exception
    * @throws SQLException exception
+   * @throws URISyntaxException 
    */
-  public World() throws ClassNotFoundException, SQLException{
+  public World() throws ClassNotFoundException, SQLException, URISyntaxException{
     query = new SQLQuery();
     nations = buildNations();
     eventGen = new EventGenerator(query);
@@ -61,7 +63,7 @@ public class World {
     
     query.IncYear();
     year = query.getYear();
-    if(year % 10 == 0){
+    if(year % 10 == 0 && nations.size() !=0){
       eventGen.generate();
     }
     

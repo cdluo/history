@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UncheckedIOException;
+import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.sql.SQLException;
@@ -50,7 +51,7 @@ import spark.template.freemarker.FreeMarkerEngine;
 
 
 public class Main {
-  public static void main(String[] args) throws SQLException, ClassNotFoundException {
+  public static void main(String[] args) throws SQLException, ClassNotFoundException, URISyntaxException {
     new Main(args).run();
   }
 
@@ -71,7 +72,7 @@ public class Main {
     this.args = args;
   }
 
-  private void run() throws SQLException, ClassNotFoundException {
+  private void run() throws SQLException, ClassNotFoundException, URISyntaxException {
 //    OptionParser parser = new OptionParser();
 //
 //    parser.accepts("gui");

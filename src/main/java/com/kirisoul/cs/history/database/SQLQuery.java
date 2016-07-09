@@ -1,5 +1,7 @@
 package com.kirisoul.cs.history.database;
 
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -27,8 +29,9 @@ public class SQLQuery {
    *           exception
    * @throws SQLException
    *           exception
+   * @throws URISyntaxException 
    */
-  public SQLQuery() throws ClassNotFoundException, SQLException {
+  public SQLQuery() throws ClassNotFoundException, SQLException, URISyntaxException {
     
     try {
       Class.forName("org.postgresql.Driver");
@@ -40,9 +43,7 @@ public class SQLQuery {
     }
     
     try {
-      conn = DriverManager.getConnection(
-          "jdbc:postgresql://127.0.0.1:5432/world1", "ChrisLuo",
-          "123456");
+      conn = getConnection();
     } catch (SQLException e) {
       System.out.println("Connection Failed! Check output console");
       e.printStackTrace();
@@ -51,6 +52,16 @@ public class SQLQuery {
 
 //    Statement stat = conn.createStatement();
 //    stat.executeUpdate("PRAGMA foreign_keys = ON;");
+  }
+  
+  private static Connection getConnection() throws URISyntaxException, SQLException {
+    String dbUrl = "jdbc:postgresql://ec2-54-243-249-159.compute-1.amazonaws.com:5432/df708mtap8o1be?user=yiifzbhbiiaaij&password=pnz2ZDE06e8jwAL2hXPbVh2OjF&sslmode=require";
+
+//    String username = dbUri.getUserInfo().split(":")[0];
+//    String password = dbUri.getUserInfo().split(":")[1];
+//    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+
+    return DriverManager.getConnection(dbUrl);
   }
   
   /**
