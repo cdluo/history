@@ -97,51 +97,41 @@ public class Main {
     timer = new Timer();
     time = new Time(world);
     timer.schedule(time, DELAY, SECOND);
+    
+    Spark.staticFileLocation("/public");
+    Spark.setPort(getHerokuAssignedPort());
+    
+    Spark.get("/home", (request, response) -> {
+      Map<String, Object> variables =
+        ImmutableMap.of("title", "History", "header", "Earth");
+      return new ModelAndView(variables, "query.ftl");
+    }, new FreeMarkerEngine());
+    
+    // Setup Spark Routes
+//    Spark.get("/home", new FrontHandler(), freeMarker);
+    Spark.post("/time", new TimeHandler());
+    Spark.post("/timeline", new TimelineHandler());
+    Spark.post("/year", new YearHandler());
+    Spark.post("/newNation", new NewNationHandler());
+    Spark.post("/newEvent", new NewEventHandler());
+    Spark.post("/stopTime", new StopTimeHandler());
+    Spark.post("/resumeTime", new ResumeTimeHandler());
 
-//    if (options.has("gui")) {
-      runSparkServer();
-//    } else {
-      // Terminal
-      // Use to Edit DB (update methods in SQLQuery)
-      
+//    runSparkServer();
 
-//      
-//      System.out.println(q.getEvent(50));
-      
-//      EventGenerator eg = new EventGenerator(q);
-//      eg.generate();
-      
-//      Nation test = new Nation("test", 100000, 4000, 100, 100);
-//      
-//      EventInterpreter eI = new EventInterpreter();
-//      Event e = new Event(100, "Economic Boom", "test");
-//      eI.interpret(e);
-//      
-//      test.eventPop(eI.getPop());
-//      test.eventGdp(eI.getGdp());
-//      test.eventSocial(eI.getSocial());
-//      test.eventLiving(eI.getLiving());
-//      
-//      test.passTime();
-//      
-//      System.out.println(test.toString());
-      
-//      System.out.println("Done");
-//      System.exit(0);
+  }
+
+//  private static FreeMarkerEngine createEngine() {
+//    Configuration config = new Configuration();
+//    File templates = new File("src/main/resources/spark/template/freemarker");
+//    try {
+//      config.setDirectoryForTemplateLoading(templates);
+//    } catch (IOException ioe) {
+//      System.out.printf("ERROR: Unable use %s for template loading.\n", templates);
+//      System.exit(1);
 //    }
-  }
-
-  private static FreeMarkerEngine createEngine() {
-    Configuration config = new Configuration();
-    File templates = new File("src/main/resources/spark/template/freemarker");
-    try {
-      config.setDirectoryForTemplateLoading(templates);
-    } catch (IOException ioe) {
-      System.out.printf("ERROR: Unable use %s for template loading.\n", templates);
-      System.exit(1);
-    }
-    return new FreeMarkerEngine(config);
-  }
+//    return new FreeMarkerEngine(config);
+//  }
   
   /**
    * From the Spark Heroku Tutorial.
@@ -155,32 +145,32 @@ public class Main {
     return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
   }
 
-  private void runSparkServer() {
-    Spark.externalStaticFileLocation("src/main/resources/static");
-    
-    Spark.setPort(getHerokuAssignedPort());
+//  private void runSparkServer() {
+//    Spark.externalStaticFileLocation("src/main/resources/static");
+//    
+//    Spark.setPort(getHerokuAssignedPort());
+//
+//    FreeMarkerEngine freeMarker = createEngine();
+//
+//    // Setup Spark Routes
+//    Spark.get("/home", new FrontHandler(), freeMarker);
+//    Spark.post("/time", new TimeHandler());
+//    Spark.post("/timeline", new TimelineHandler());
+//    Spark.post("/year", new YearHandler());
+//    Spark.post("/newNation", new NewNationHandler());
+//    Spark.post("/newEvent", new NewEventHandler());
+//    Spark.post("/stopTime", new StopTimeHandler());
+//    Spark.post("/resumeTime", new ResumeTimeHandler());
+//  }
 
-    FreeMarkerEngine freeMarker = createEngine();
-
-    // Setup Spark Routes
-    Spark.get("/home", new FrontHandler(), freeMarker);
-    Spark.post("/time", new TimeHandler());
-    Spark.post("/timeline", new TimelineHandler());
-    Spark.post("/year", new YearHandler());
-    Spark.post("/newNation", new NewNationHandler());
-    Spark.post("/newEvent", new NewEventHandler());
-    Spark.post("/stopTime", new StopTimeHandler());
-    Spark.post("/resumeTime", new ResumeTimeHandler());
-  }
-
-  private class FrontHandler implements TemplateViewRoute {
-    @Override
-    public ModelAndView handle(Request req, Response res) {
-      Map<String, Object> variables =
-        ImmutableMap.of("title", "History", "header", "Earth");
-      return new ModelAndView(variables, "query.ftl");
-    }
-  }
+//  private class FrontHandler implements TemplateViewRoute {
+//    @Override
+//    public ModelAndView handle(Request req, Response res) {
+//      Map<String, Object> variables =
+//        ImmutableMap.of("title", "History", "header", "Earth");
+//      return new ModelAndView(variables, "query.ftl");
+//    }
+//  }
   
   private class TimeHandler implements Route {
     @Override
