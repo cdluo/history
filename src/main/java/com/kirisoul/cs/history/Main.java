@@ -235,8 +235,6 @@ public class Main {
       String type = qm.value("type");
       int year = Integer.parseInt(qm.value("year"));
       String to = qm.value("to");
-      
-      System.out.println(type + year + to);
 
       try {
         sqlDB.addEvent(year, type, to);
