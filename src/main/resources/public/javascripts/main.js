@@ -1,22 +1,32 @@
-//Learned: 
+// Reflections: 
 
 // -Must add canvas element to doc itself before referencing it! Duh! (No sense of object until it physically exists)
 // -Only set the ticker on instantiation. Basically, a lot of it is like Java! (More than you would think at first)
-// -If a dumb thing is taking a long time, it's probably something wrong with your assumption.
+// -If a dumb thing is taking a long time, it's probably something wrong with your assumptions.
 
 'use strict';
 
 var curWorld;
 var timeline;
 var year;
-var canvStgMap = new Array();		//Associative Array (Dictionary) for linking a canvas id to its stage.
+var canvStgMap = {};		//Associative Array for linking a canvas id to its stage. ([K:canvas]||[V:stage])
 var timeout;
 var clockStage;		//For controlling the top clock animation, will be instantiated at the bottom.
+var timeRunning;	//based on whether the clockstage is running or not (so it's possible to be not running on page load)
 
 /*
 	Central time keeping function. Essentially the page's Main().
 */
 function passTime(){
+
+	var clock = document.getElementById("clock");
+
+	if(clock.classList.contains("running")){
+		timeRunning = true;
+	}else{
+		timeRunning = false;
+	}
+
 	$.post("/time", function(response) {
 		curWorld = JSON.parse(response);
 		drawWorld();
@@ -34,30 +44,10 @@ function passTime(){
 		document.getElementById("year").innerHTML = year;
 	});
 
-	timeout = setTimeout(passTime,1000);	//Must match timer.schedule in Main
-}
-
-$( "#clock" ).click(function() {
-
-	if(this.classList.contains("running")){
-		clearTimeout(timeout);
-		this.classList.remove("running");
-		$.post("/stopTime", function(response) {
-			var year = JSON.parse(response);
-			console.log("Time stopped on " + year + ".");
-			clockStage.getChildByName("flower").stop();
-		});
-	}else{
-		timeout = setTimeout(passTime,1000);
-		this.classList.add("running");
-		$.post("/resumeTime", function(response) {
-			var year = JSON.parse(response);
-			console.log("Time resumed on " + year + ".");
-		});
-		clockStage.getChildByName("flower").play();
+	if(timeRunning){
+		timeout = setTimeout(passTime,1000);	//Should match timer.schedule in Main on the backend.
 	}
-	
-});
+}
 
 /*
 	Called during each post to "/time".
@@ -99,7 +89,7 @@ function drawWorld(){
 function init(canvas, nation){
 
 	var stage = new createjs.Stage(canvas);
-	canvStgMap[canvas] = stage;
+	canvStgMap[String(canvas)] = stage;		// Map the stage to its canvas in the global map. 
 
 	createjs.Ticker.on("tick", handleTick);
   createjs.Ticker.framerate = 30;
@@ -156,18 +146,22 @@ function init(canvas, nation){
 	var ff6Person = new Image();
 	ff6Person.src = "images/FF6Sprite.png";
 
-	var data = {
-	  images: [ff6Person],
-	  frames: {width:20, height:30, regX:-17, regY:-17, spacing:0, margin:0},
-	  animations: {
-	  	one: [0],	
-	  	two: [1],
-	  	three: [2],
-	    walk: [0,2,"walk",0.33]
-    }
-  };
+	var data;
 
-  ff6Person.onload = addSprite(stage, data, 2.25, 2.25, "walk", "person");
+  ff6Person.onload = function(){
+
+  	data = {
+	  	images: [ff6Person],
+	  	frames: {width:20, height:30, regX:-17, regY:-17, spacing:0, margin:0},
+	  	animations: {
+	  		one: [0],	
+	  		two: [1],
+	  		three: [2],
+	    	walk: [0,2,"walk",0.33]
+    	}
+  	};
+  	addSprite(stage, data, 2.25, 2.25, "walk", "person");
+  };
 
 	var popLabel = new createjs.Text(nation.pop, "24px Arial", "#000000");
 	popLabel.x = 125;
@@ -183,15 +177,18 @@ function init(canvas, nation){
 	var dollar = new Image();
 	dollar.src = "images/dollarSpriteSheet.png";
 
-	data = {
-	  images: [dollar],
-	  frames: {width:50, height:20, regX:-10, regY:-60, spacing:5, margin:0},
-	  animations: {
-	    shine: [0,2,"shine",0.2]
-    }
-  };
+	dollar.onload = function(){
+		data = {
+		  images: [dollar],
+		  frames: {width:50, height:20, regX:-10, regY:-60, spacing:5, margin:0},
+		  animations: {
+		    shine: [0,2,"shine",0.2]
+	    }
+	  };
 
-	dollar.onload = addSprite(stage, data, 1.75, 1.75, "shine", "dollar");
+	  addSprite(stage, data, 1.75, 1.75, "shine", "dollar");
+	};
+
 
 	var gdpLabel = new createjs.Text(nation.gdp, "24px Arial", "#000000");
 	gdpLabel.x = 125;
@@ -207,25 +204,29 @@ function init(canvas, nation){
 	var social = new Image();
 	social.src = "images/Social.png";
 
-	data = {
-	  images: [social],
-	  frames: {width:71, height:61, regX:-20, regY:-145, spacing:0, margin:0},
-	  animations: {
-	  	heart: [8,9,"heart",0.1],	
-	  	dot: {
-            frames: [0,10,3,7],
-            next: "dot",
-            speed: 0.05
-      },
-      anger: {
-            frames: [6,4,2,5,1],
-            next: "anger",
-            speed: 0.4
-      }
-    }
-  };
 
-	social.onload =  addSprite(stage, data, 1, 1, "heart", "social");
+	social.onload = function(){
+
+		data = {
+		  images: [social],
+		  frames: {width:71, height:61, regX:-20, regY:-145, spacing:0, margin:0},
+		  animations: {
+		  	heart: [8,9,"heart",0.1],	
+		  	dot: {
+	            frames: [0,10,3,7],
+	            next: "dot",
+	            speed: 0.05
+	      },
+	      anger: {
+	            frames: [6,4,2,5,1],
+	            next: "anger",
+	            speed: 0.4
+	      }
+	    }
+	  };
+
+	  addSprite(stage, data, 1, 1, "heart", "social");
+	};
 
 	////////////
 	// Living //
@@ -234,17 +235,19 @@ function init(canvas, nation){
 	var living = new Image();
 	living.src = "images/Living.png";
 
-	data = {
-	  images: [living],
-	  frames: {width:96, height:96, regX:-28, regY:-265, spacing:0, margin:0},
-	  animations: {
-	  	spring: [0,2,"spring",0.05],	
-	  	fall: [3,4,"fall",0.05],	
-	  	winter:[5]
-    }
-  };
+	living.onload = function(){
+		data = {
+		  images: [living],
+		  frames: {width:96, height:96, regX:-28, regY:-265, spacing:0, margin:0},
+		  animations: {
+		  	spring: [0,2,"spring",0.05],	
+		  	fall: [3,4,"fall",0.05],	
+		  	winter:[5]
+	    }
+	  };
 
-	living.onload =  addSprite(stage, data, 0.8, 0.8, "spring", "living");
+	  addSprite(stage, data, 0.8, 0.8, "spring", "living");
+	};
 }
 
 /*
@@ -271,6 +274,15 @@ function getProgressBar(stage, percent){
 	return graphics;
 }
 
+/*
+	Adds a sprite to the given stage
+
+	@param stage: the stage to add the sprite to
+	@param data: the spritesheet data 
+	@param scaleX: initial x scale size
+	@param scaleY: intial y scale size
+	@param name: name of the sprite
+*/
 function addSprite(stage, data, scaleX, scaleY, startAni, name){
 	var spriteSheet = new createjs.SpriteSheet(data);
 
@@ -299,7 +311,6 @@ function drawNation(nation){
 
 	socialBar1.name = "socialBar";
 	stage.addChild(socialBar1);
-	// stage.setChildIndex(socialBar1, 0);		//Sends to back, only if you want numbers.
 
 	stage.removeChild(stage.getChildByName("livingBar"));
 
@@ -351,8 +362,8 @@ function drawNation(nation){
 }
 
 /**
- * Adds a message to the chatbox, with the specified color
- * color must be "white", "green", "red", or "blue"
+ * Updates the message box. The color variable options
+ * are defined in main.css.
  */
 function drawTimeline(){
 	
@@ -389,27 +400,79 @@ function scrollEvents(){
 }
 
 /*
+	Pauses the animations in each nation window.
+*/
+function pauseNationAnimations(){
+
+	for (var key in canvStgMap) {
+		console.log("key " + key
+         + " has value "
+         + canvStgMap[key]);
+	}
+
+	console.log("finished");
+}
+
+/*
 	Executed on page load.
 */
-clockStage = new createjs.Stage(document.getElementById("clock"));
+function initFlowerClock(){
+	clockStage = new createjs.Stage(document.getElementById("clock"));
 	createjs.Ticker.on("tick", handleTick);
   createjs.Ticker.framerate = 30;
     function handleTick(event) {
         clockStage.update(event);
     }
 
-var flower = new Image();
-flower.src = "images/FlowerSheet.png";
+	var flower = new Image();
+	flower.src = "images/FlowerSheet.png";
 
-var data = {
-	  images: [flower],
-	  frames: {width:50, height:50, regX:0, regY:0, spacing:0, margin:0},
-	  animations: {
-	  	life: [0,30,"life",0.2],	
-    }
+	flower.onload = function(){
+			var data = {
+			  images: [flower],
+			  frames: {width:50, height:50, regX:0, regY:0, spacing:0, margin:0},
+			  animations: {
+			  	life: [0,30,"life",0.2],	
+		    }
+		};
+
+		addSprite(clockStage, data, 1, 1, "life", "flower");
+	};
+
+	$( "#clock" ).click(function() {
+
+		if(this.classList.contains("running")){
+			clearTimeout(timeout);
+			this.classList.remove("running");
+			timeRunning = false;
+
+			$.post("/stopTime", function(response) {
+				var year = JSON.parse(response);
+				console.log("Time stopped on " + year + ".");
+				clockStage.getChildByName("flower").stop();
+			});
+		}else{
+			timeout = setTimeout(passTime,1000);
+			this.classList.add("running");
+			timeRunning = true;
+
+			$.post("/resumeTime", function(response) {
+				var year = JSON.parse(response);
+				console.log("Time resumed on " + year + ".");
+			});
+			clockStage.getChildByName("flower").play();
+		}
+	});
+}
+
+//////////////////////////////////
+//////////// Start! //////////////
+//////////////////////////////////
+
+initFlowerClock();
+window.onload = function(){
+	passTime();
+	pauseNationAnimations();		//Some ajax asynchronus stuff to read up on. The ajax calls in passTime haven't finished when this is called.
 };
 
-addSprite(clockStage, data, 1, 1, "life", "flower");
-
-window.onload = passTime();
 
