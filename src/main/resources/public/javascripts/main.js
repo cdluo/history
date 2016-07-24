@@ -403,14 +403,30 @@ function scrollEvents(){
 	Pauses the animations in each nation window.
 */
 function pauseNationAnimations(){
-
 	for (var key in canvStgMap) {
-		console.log("key " + key
-         + " has value "
-         + canvStgMap[key]);
-	}
+		
+		var stage = canvStgMap[key];
 
-	console.log("finished");
+		stage.getChildByName("person").stop();
+		stage.getChildByName("dollar").stop();
+		stage.getChildByName("social").stop();
+		stage.getChildByName("living").stop();
+	}
+}
+
+/*
+	Plays the animations in each nation window.
+*/
+function playNationAnimations(){
+	for (var key in canvStgMap) {
+		
+		var stage = canvStgMap[key];
+
+		stage.getChildByName("person").play();
+		stage.getChildByName("dollar").play();
+		stage.getChildByName("social").play();
+		stage.getChildByName("living").play();
+	}
 }
 
 /*
@@ -438,32 +454,37 @@ function initFlowerClock(){
 
 		addSprite(clockStage, data, 1, 1, "life", "flower");
 	};
-
-	$( "#clock" ).click(function() {
-
-		if(this.classList.contains("running")){
-			clearTimeout(timeout);
-			this.classList.remove("running");
-			timeRunning = false;
-
-			$.post("/stopTime", function(response) {
-				var year = JSON.parse(response);
-				console.log("Time stopped on " + year + ".");
-				clockStage.getChildByName("flower").stop();
-			});
-		}else{
-			timeout = setTimeout(passTime,1000);
-			this.classList.add("running");
-			timeRunning = true;
-
-			$.post("/resumeTime", function(response) {
-				var year = JSON.parse(response);
-				console.log("Time resumed on " + year + ".");
-			});
-			clockStage.getChildByName("flower").play();
-		}
-	});
 }
+
+/*
+	Jquery Handler for the flowerclock.
+*/
+$( "#clock" ).click(function() {
+
+	if(this.classList.contains("running")){
+		clearTimeout(timeout);
+		this.classList.remove("running");
+		timeRunning = false;
+
+		$.post("/stopTime", function(response) {
+			var year = JSON.parse(response);
+			console.log("Time stopped on " + year + ".");
+			clockStage.getChildByName("flower").stop();
+			pauseNationAnimations();
+		});
+	}else{
+		timeout = setTimeout(passTime,1000);
+		this.classList.add("running");
+		timeRunning = true;
+
+		$.post("/resumeTime", function(response) {
+			var year = JSON.parse(response);
+			console.log("Time resumed on " + year + ".");
+			clockStage.getChildByName("flower").play();
+			playNationAnimations();
+		});
+	}
+});
 
 //////////////////////////////////
 //////////// Start! //////////////
@@ -472,7 +493,7 @@ function initFlowerClock(){
 initFlowerClock();
 window.onload = function(){
 	passTime();
-	pauseNationAnimations();		//Some ajax asynchronus stuff to read up on. The ajax calls in passTime haven't finished when this is called.
+	pauseNationAnimations();
 };
 
 
