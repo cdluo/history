@@ -1,18 +1,19 @@
 package com.kirisoul.cs.history.database;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kirisoul.cs.history.events.EconomicBoom;
+import com.kirisoul.cs.history.events.EconomicDownturn;
+import com.kirisoul.cs.history.events.Election;
 import com.kirisoul.cs.history.events.Event;
-import org.postgresql.Driver;
+import com.kirisoul.cs.history.events.NaturalDisaster;
 
 public class SQLQuery {
   
@@ -49,17 +50,11 @@ public class SQLQuery {
       e.printStackTrace();
       return;
     }
-
-//    Statement stat = conn.createStatement();
-//    stat.executeUpdate("PRAGMA foreign_keys = ON;");
   }
   
   private static Connection getConnection() throws URISyntaxException, SQLException {
-    String dbUrl = "jdbc:postgresql://ec2-54-243-249-159.compute-1.amazonaws.com:5432/df708mtap8o1be?user=yiifzbhbiiaaij&password=pnz2ZDE06e8jwAL2hXPbVh2OjF&sslmode=require";
-
-//    String username = dbUri.getUserInfo().split(":")[0];
-//    String password = dbUri.getUserInfo().split(":")[1];
-//    String dbUrl = "jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath();
+    String dbUrl = "jdbc:postgresql://ec2-54-243-249-159.compute-1.amazonaws.com:5432/df708mtap8o1be?"
+        + "user=yiifzbhbiiaaij&password=pnz2ZDE06e8jwAL2hXPbVh2OjF&sslmode=require";
 
     return DriverManager.getConnection(dbUrl);
   }
@@ -125,8 +120,6 @@ public class SQLQuery {
     
     rs.next();
     int pop = rs.getInt(1);
-    
-    System.out.println(pop);
 
     rs.close();
     prep.close();
@@ -275,7 +268,9 @@ public class SQLQuery {
     ps.close();
   }
   
+  ////////////////////////////////////////////////////////////
   /////////////////////// Timeline ///////////////////////////
+  ////////////////////////////////////////////////////////////
   
   /**
    * Gets the present year.
@@ -334,6 +329,7 @@ public class SQLQuery {
 
  /**
   * Gets the events for a given year
+  * 
   * @param year integer
   * @return List of events
   * @throws SQLException exception
@@ -350,7 +346,7 @@ public class SQLQuery {
    List<Event> events = new ArrayList<Event>();
    
    while (rs.next()) {
-     Event newEvent = new Event(rs.getInt(1), rs.getString(2), rs.getString(3));
+     Event newEvent = interpretEvent(rs.getInt(1), rs.getString(2), rs.getString(3));
      events.add(newEvent);
    }
    
@@ -366,7 +362,8 @@ public class SQLQuery {
  }
  
  /**
-  * Gets the entire timeline (for logging purposes in the GUI?)
+  * Gets the entire timeline (Maybe use for logging purposes in the GUI?)
+  * 
   * @return entire timeline in a list of events
   * @throws SQLException exception
   */
@@ -380,7 +377,7 @@ public class SQLQuery {
    List<Event> events = new ArrayList<Event>();
    
    while (rs.next()) {
-     Event newEvent = new Event(rs.getInt(1), rs.getString(2), rs.getString(3));
+     Event newEvent = interpretEvent(rs.getInt(1), rs.getString(2), rs.getString(3));
      events.add(newEvent);
    }
    
@@ -388,5 +385,28 @@ public class SQLQuery {
    prep.close();
    return events;
    
+ }
+ 
+ /*
+  * For interpreting what kind of event the DB sends back based on its name.
+  */
+ public Event interpretEvent(int year, String name, String to){
+   Event e = null;
+   
+   if(name.equals("Natural Disaster")){
+     e = new NaturalDisaster(year, to);
+   }
+   else if(name.equals("Election")){
+     e = new Election(year, to);
+   }
+   else if(name.equals("Economic Downturn")){
+     e = new EconomicDownturn(year, to);
+   }else if(name.equals("Economic Boom")){
+     e = new EconomicBoom(year, to);
+   }else{
+     System.out.println("ERROR: DB returned uninterpreble event");
+   }
+   
+   return e;
  }
 }

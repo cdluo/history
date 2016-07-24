@@ -47,25 +47,25 @@ public class EventGenerator {
    * @throws SQLException
    */
   public void generate() throws SQLException{
-    int year = db.getYear() + (int) Math.floor(Math.random()*100);  //For event
-    
-    int type = (int) Math.floor(Math.random()*100);
-    String name;  //For event
-   
-    if(type > 95){
-      name = "Natural Disaster";
-    }else if(type > 67){
-      name = "Election";
-    }else if(type > 33){
-      name = "Economic Downturn";
-    }else{
-      name = "Economic Boom";
-    }
+    int year = db.getYear() + (int) Math.floor(Math.random()*100);
     
     int index = (int) Math.floor(Math.random() * db.getNationNames().size());
     String to = (String) db.getNationNames().toArray()[index];
     
-    Event newEvent = new Event(year, name, to);
+    Event newEvent = null;
+    
+    int type = (int) Math.floor(Math.random()*100);
+   
+    if(type > 95){
+      newEvent = new NaturalDisaster(year, to);
+    }else if(type > 67){
+      newEvent = new Election(year, to);
+    }else if(type > 33){
+      newEvent = new EconomicDownturn(year, to);
+    }else{
+      newEvent = new EconomicBoom(year, to);
+    }
+    
     addEvent(newEvent);
   }
   

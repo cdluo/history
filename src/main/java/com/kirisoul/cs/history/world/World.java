@@ -2,14 +2,13 @@ package com.kirisoul.cs.history.world;
 
 import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
+import java.util.concurrent.ConcurrentHashMap;
 
 import com.kirisoul.cs.history.database.SQLQuery;
 import com.kirisoul.cs.history.entities.Nation;
 import com.kirisoul.cs.history.events.Event;
 import com.kirisoul.cs.history.events.EventGenerator;
-import com.kirisoul.cs.history.events.EventInterpreter;
 
 /**
  * Conducts all the logic for the game
@@ -19,9 +18,8 @@ import com.kirisoul.cs.history.events.EventInterpreter;
 public class World {
 
   private SQLQuery query;
-  private ConcurrentHashMap<String, Nation> nations;   //Make a ConcurrentHashMap
+  private ConcurrentHashMap<String, Nation> nations;
   private EventGenerator eventGen;
-  private EventInterpreter eventInterpret;
   private List<Event> curEvents;
   private int year;
   
@@ -36,7 +34,6 @@ public class World {
     query = new SQLQuery();
     nations = buildNations();
     eventGen = new EventGenerator(query);
-    eventInterpret = new EventInterpreter();
     curEvents = null;
     year = -1;
   }
@@ -99,16 +96,15 @@ public class World {
   }
   
   public void interpretEvent(Event e) throws SQLException{
-    eventInterpret.interpret(e);
     String to = e.getTo();
     Nation n = nations.get(to);
 
     if(n != null){
         
-        n.eventPop(eventInterpret.getPop());
-        n.eventGdp(eventInterpret.getGdp());
-        n.eventSocial(eventInterpret.getSocial());
-        n.eventLiving(eventInterpret.getLiving());
+        n.eventPop(e.getPop());
+        n.eventGdp(e.getGdp());
+        n.eventSocial(e.getSocial());
+        n.eventLiving(e.getLiving());
         
         query.updatePop(n.getName(), n.getPop());
         query.updateGdp(n.getName(), n.getGdp());
