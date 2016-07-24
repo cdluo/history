@@ -1,7 +1,21 @@
 package com.kirisoul.cs.history.events;
 
+/**
+ * An Election!
+ * 
+ * Research:
+ * None, made it up
+ * 
+ * @author ChrisLuo
+ */
 public class Election extends Event{
 
+  /**
+   * Constructor
+   * 
+   * @param year1
+   * @param to1
+   */
   public Election(int year1, String to1) {
     super(year1, to1);
     

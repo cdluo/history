@@ -1,7 +1,21 @@
 package com.kirisoul.cs.history.events;
 
+/**
+ * An Economic Downturn!
+ * 
+ * Research:
+ * None, just made it up
+ * 
+ * @author ChrisLuo
+ */
 public class EconomicDownturn extends Event{
 
+  /**
+   * Constructor
+   * 
+   * @param year1
+   * @param to1
+   */
   public EconomicDownturn(int year1, String to1) {
     super(year1, to1);
     

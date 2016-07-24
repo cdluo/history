@@ -19,6 +19,11 @@ import spark.Route;
 import spark.Spark;
 import spark.template.freemarker.FreeMarkerEngine;
 
+/**
+ * Main class, starts the server, contains handlers for the GUI, etc...
+ * 
+ * @author ChrisLuo
+ */
 
 public class Main {
   public static void main(String[] args) throws SQLException, ClassNotFoundException, URISyntaxException {
@@ -75,7 +80,8 @@ public class Main {
   
   /**
    * From the Spark Heroku Tutorial.
-   * @return
+   * 
+   * @return port to use
    */
   static int getHerokuAssignedPort() {
     ProcessBuilder processBuilder = new ProcessBuilder();
@@ -85,14 +91,24 @@ public class Main {
     return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
   }
   
+  /**
+   * Sends the nations list to the front end for time updates.
+   * 
+   * @author ChrisLuo
+   */
   private class TimeHandler implements Route {
     @Override
     public Object handle(Request req, Response res) {
 
-      return GSON.toJson(world.getNations());
+      return GSON.toJson(world.getNations().values());
     }
   }
   
+  /**
+   * Sends the event log/timeline to the front end.
+   * 
+   * @author ChrisLuo
+   */
   private class TimelineHandler implements Route {
     @Override
     public Object handle(Request req, Response res) {
@@ -101,6 +117,11 @@ public class Main {
     }
   }
   
+  /**
+   * Sends the current year to the front end.
+   * 
+   * @author ChrisLuo
+   */
   private class YearHandler implements Route {
     @Override
     public Object handle(Request req, Response res) {
@@ -109,6 +130,11 @@ public class Main {
     }
   }
   
+  /**
+   * Handles creation/adding of new nation to DB.
+   * 
+   * @author ChrisLuo
+   */
   private class NewNationHandler implements Route {
     @Override
     public Object handle(Request req, Response res) {
@@ -131,6 +157,11 @@ public class Main {
     }
   }
   
+  /**
+   * Handles creating/adding of new event to DB.
+   * 
+   * @author ChrisLuo
+   */
   private class NewEventHandler implements Route {
     @Override
     public Object handle(Request req, Response res) {
@@ -151,6 +182,11 @@ public class Main {
     }
   }
   
+  /**
+   * Upon being called by front end, stops the servers time functions.
+   * 
+   * @author ChrisLuo
+   */
   private class StopTimeHandler implements Route {
     @Override
     public Object handle(Request req, Response res) {
@@ -160,6 +196,11 @@ public class Main {
     }
   }
   
+  /**
+   * Upon being called by front end, starts the servers time functions.
+   * 
+   * @author ChrisLuo
+   */
   private class ResumeTimeHandler implements Route {
     @Override
     public Object handle(Request req, Response res) {

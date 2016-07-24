@@ -1,7 +1,21 @@
 package com.kirisoul.cs.history.events;
 
+/**
+ * Oh no! A Natural Disaster
+ * 
+ * Research:
+ * None, made it up
+ * 
+ * @author ChrisLuo
+ */
 public class NaturalDisaster extends Event{
 
+  /**
+   * Constructor
+   * 
+   * @param year1
+   * @param to1
+   */
   public NaturalDisaster(int year1, String to1) {
     super(year1, to1);
     

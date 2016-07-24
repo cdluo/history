@@ -28,15 +28,23 @@ import com.kirisoul.cs.history.database.SQLQuery;
 
 public class EventGenerator {
 
+  /**
+   * Database
+   */
   private SQLQuery db;
   
+  /**
+   * Constructor
+   * 
+   * @param db1
+   */
   public EventGenerator(SQLQuery db1){
     db = db1;
   }
   
   /**
    * Adds an event to the timeline.
-   * @throws SQLException 
+   * @throws SQLException exception
    */
   public void addEvent(Event e) throws SQLException{
     db.addEvent(e.getYear(), e.getName(), e.getTo());
@@ -44,7 +52,7 @@ public class EventGenerator {
   
   /**
    * Generates an event and adds it to the timeline.
-   * @throws SQLException
+   * @throws SQLException exception
    */
   public void generate() throws SQLException{
     int year = db.getYear() + (int) Math.floor(Math.random()*100);

@@ -15,6 +15,12 @@ import com.kirisoul.cs.history.events.Election;
 import com.kirisoul.cs.history.events.Event;
 import com.kirisoul.cs.history.events.NaturalDisaster;
 
+/**
+ * Database class that conducts all interactions with the heroku-PostgreSQL DB.
+ * 
+ * @author ChrisLuo
+ */
+
 public class SQLQuery {
   
   /**
@@ -52,6 +58,13 @@ public class SQLQuery {
     }
   }
   
+  /**
+   * Gets the connection to the heroku-PostGreSQL DB.
+   * 
+   * @return a DB Connection
+   * @throws URISyntaxException exception
+   * @throws SQLException exception
+   */
   private static Connection getConnection() throws URISyntaxException, SQLException {
     String dbUrl = "jdbc:postgresql://ec2-54-243-249-159.compute-1.amazonaws.com:5432/df708mtap8o1be?"
         + "user=yiifzbhbiiaaij&password=pnz2ZDE06e8jwAL2hXPbVh2OjF&sslmode=require";
@@ -61,6 +74,7 @@ public class SQLQuery {
   
   /**
    * Adds a nation to the database
+   * 
    * @param n the nation to be added
    * @throws SQLException exception
    */
@@ -81,6 +95,7 @@ public class SQLQuery {
   
   /**
    * Gets a list of all the nations in the database
+   * 
    * @return List of nations
    * @throws SQLException exception
    */
@@ -106,6 +121,7 @@ public class SQLQuery {
   
   /**
    * Given the name of a nation, returns its population
+   * 
    * @param name of the nation
    * @return population
    * @throws SQLException exception
@@ -129,8 +145,9 @@ public class SQLQuery {
   
   /**
    * Given the name of a nation, returns its gdp
+   * 
    * @param name of the nation
-   * @return gdp
+   * @return gdp its gdp
    * @throws SQLException exception
    */
   public int queryGdp(String name) throws SQLException {
@@ -151,9 +168,10 @@ public class SQLQuery {
   }
   
   /**
-   * Get the Social Stability index for a nation given its name
-   * @param name
-   * @return social
+   * Get the Social Stability index for a nation given its name.
+   * 
+   * @param name of the nation
+   * @return social integer from 1-100 representing the index
    * @throws SQLException exception
    */
   public int querySocial(String name) throws SQLException {
@@ -175,8 +193,9 @@ public class SQLQuery {
   
   /**
    * Gets the living standard of a nation given its name.
-   * @param name
-   * @return living
+   * 
+   * @param name of the nation
+   * @return living from 1-100
    * @throws SQLException
    */
   public int queryLiving(String name) throws SQLException {
@@ -197,10 +216,11 @@ public class SQLQuery {
   }
   
   /**
-   * Updates a nation's population in the database
-   * @param name
-   * @param newPop
-   * @throws SQLException
+   * Updates a nation's population in the database.
+   * 
+   * @param name of the nation
+   * @param newPop to be updated
+   * @throws SQLException exception
    */
   public void updatePop(String name, int newPop) throws SQLException {
     String query = "UPDATE Nations SET Pop = ? WHERE name = ?";
@@ -215,10 +235,11 @@ public class SQLQuery {
   }
   
   /**
-   * Updates a nation's gdp in the database
-   * @param name
-   * @param newGdp
-   * @throws SQLException
+   * Updates a nation's gdp in the database.
+   * 
+   * @param name of the nation
+   * @param newGdp to be updated
+   * @throws SQLException exception
    */
   public void updateGdp(String name, int newGdp) throws SQLException {
     String query = "UPDATE Nations SET Gdp = ? WHERE name = ?";
@@ -234,9 +255,10 @@ public class SQLQuery {
   
   /**
    * Updates a nation's social stability in the db.
-   * @param name
-   * @param newSoc
-   * @throws SQLException
+   * 
+   * @param name of the nation
+   * @param newSoc the social stability index to be updated
+   * @throws SQLException exception
    */
   public void updateSocial(String name, int newSoc) throws SQLException {
     String query = "UPDATE Nations SET Social = ? WHERE name = ?";
@@ -252,9 +274,10 @@ public class SQLQuery {
   
   /**
    * Updates a nation's living standards in the db.
-   * @param name
-   * @param newLiv
-   * @throws SQLException
+   * 
+   * @param name of the nation
+   * @param newLiv to be updated
+   * @throws SQLException exception
    */
   public void updateLiving(String name, int newLiv) throws SQLException {
     String query = "UPDATE Nations SET Living = ? WHERE name = ?";
@@ -274,6 +297,7 @@ public class SQLQuery {
   
   /**
    * Gets the present year.
+   * 
    * @return present year (int)
    * @throws SQLException exception
    */
@@ -295,6 +319,7 @@ public class SQLQuery {
   
   /**
    * Updates the present year.
+   * 
    * @throws SQLException exception
    */
   public void IncYear() throws SQLException {
@@ -311,6 +336,7 @@ public class SQLQuery {
   
   /**
   * Adds a timeline event to the database
+  * 
   * @param e the event to be added
   * @throws SQLException exception
   */
@@ -387,7 +413,7 @@ public class SQLQuery {
    
  }
  
- /*
+ /**
   * For interpreting what kind of event the DB sends back based on its name.
   */
  public Event interpretEvent(int year, String name, String to){

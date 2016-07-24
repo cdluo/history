@@ -17,10 +17,25 @@ import com.kirisoul.cs.history.events.EventGenerator;
 
 public class World {
 
+  /**
+   * DB
+   */
   private SQLQuery query;
+  /**
+   * HashMap of all the nations.
+   */
   private ConcurrentHashMap<String, Nation> nations;
+  /**
+   * Event Generator
+   */
   private EventGenerator eventGen;
+  /**
+   * Events for the current year
+   */
   private List<Event> curEvents;
+  /**
+   * The current year.
+   */
   private int year;
   
   /**
@@ -95,6 +110,13 @@ public class World {
     System.out.println("----------------");
   }
   
+  /**
+   * Interprets the effects of a passed in event
+   * based on its change matricies
+   * 
+   * @param e the event to be interpreted
+   * @throws SQLException exception
+   */
   public void interpretEvent(Event e) throws SQLException{
     String to = e.getTo();
     Nation n = nations.get(to);
@@ -119,6 +141,7 @@ public class World {
   /**
    * Builds the nations list at instantiation.
    * passTime() will update this.
+   * 
    * @return ArrayList of Nations
    * @throws SQLException exception
    */
@@ -136,17 +159,28 @@ public class World {
   }
   
   /**
-   * Returns the ArrayList of Nations.
+   * Returns the HashMap of Nations.
+   * 
    * @return nations
    */
   public ConcurrentHashMap<String, Nation> getNations(){
     return nations;
   }
   
+  /**
+   * Gets the events for the current year from the DB.
+   * 
+   * @return current events in a list.
+   */
   public List<Event> getCurEvents(){
     return curEvents;
   }
   
+  /**
+   * Gets the current year from the DB.
+   * 
+   * @return the year.
+   */
   public int getYear(){
     return year;
   }
