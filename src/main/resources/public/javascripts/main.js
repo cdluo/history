@@ -493,7 +493,6 @@ $( "#clock" ).click(function() {
 initFlowerClock();
 window.onload = function(){
 	passTime();
-	pauseNationAnimations();
 };
 
 

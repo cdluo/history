@@ -2,9 +2,8 @@ package com.kirisoul.cs.history.world;
 
 import java.net.URISyntaxException;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 
 import com.kirisoul.cs.history.database.SQLQuery;
 import com.kirisoul.cs.history.entities.Nation;
@@ -20,7 +19,7 @@ import com.kirisoul.cs.history.events.EventInterpreter;
 public class World {
 
   private SQLQuery query;
-  private List<Nation> nations;   //Make a hashmap
+  private ConcurrentHashMap<String, Nation> nations;   //Make a ConcurrentHashMap
   private EventGenerator eventGen;
   private EventInterpreter eventInterpret;
   private List<Event> curEvents;
@@ -52,7 +51,7 @@ public class World {
   public void addNation(String name, int gdp, int pop, int social, int living) throws SQLException{
     query.addNation(name, pop, gdp, social, living);
     Nation added = new Nation(name, pop, gdp, social, living);
-    nations.add(added);
+    nations.put(name, added);
   }
   
   /**
@@ -84,7 +83,7 @@ public class World {
       System.out.println("");
     }
     
-    for(Nation n: nations){
+    for(Nation n: nations.values()){
       
       n.passTime();
       
@@ -102,36 +101,23 @@ public class World {
   public void interpretEvent(Event e) throws SQLException{
     eventInterpret.interpret(e);
     String to = e.getTo();
-    
-    int flag = 0;
-    //Will be better once this is a hashmap
-    for(Nation n: nations){
-      if(n.getName().equals(to)){
-//        System.out.println("Before GDP: " + n.getGdp());
+    Nation n = nations.get(to);
+
+    if(n != null){
         
         n.eventPop(eventInterpret.getPop());
         n.eventGdp(eventInterpret.getGdp());
-//        System.out.println(eventInterpret.getGdp()[0] + "|" + eventInterpret.getGdp()[1]);
         n.eventSocial(eventInterpret.getSocial());
         n.eventLiving(eventInterpret.getLiving());
-        
-//        System.out.println("After GDP: " + n.getGdp());
         
         query.updatePop(n.getName(), n.getPop());
         query.updateGdp(n.getName(), n.getGdp());
         query.updateSocial(n.getName(), n.getSocial());
         query.updateLiving(n.getName(), n.getLiving());
         
-        flag=1;
-      }
-    }
-    
-    if(flag == 0){
+    }else{
       System.out.println("Warning, could not find nation to apply event to.");
     }
-    
-    ////////
-    
   }
   
   /**
@@ -140,14 +126,14 @@ public class World {
    * @return ArrayList of Nations
    * @throws SQLException exception
    */
-  public List<Nation> buildNations() throws SQLException{
+  public ConcurrentHashMap<String, Nation> buildNations() throws SQLException{
     
-    List<Nation> nations1 = new CopyOnWriteArrayList<Nation>();
+    ConcurrentHashMap<String, Nation> nations1 = new ConcurrentHashMap<String, Nation>();
     
     for(String name: query.getNationNames()){
       Nation n = new Nation(name, query.queryPop(name), query.queryGdp(name),
                             query.querySocial(name), query.queryLiving(name));
-      nations1.add(n);
+      nations1.put(name, n);
     }
    
     return nations1;
@@ -157,7 +143,7 @@ public class World {
    * Returns the ArrayList of Nations.
    * @return nations
    */
-  public List<Nation> getNations(){
+  public ConcurrentHashMap<String, Nation> getNations(){
     return nations;
   }
   

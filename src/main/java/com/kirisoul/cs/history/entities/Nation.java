@@ -24,11 +24,18 @@ public class Nation {
   
   public void growPop(){
     pop += (int) Math.floor(1 + Math.random()*(0.01*pop));
+    if(pop < 0){
+      pop = 0;
+    }
   }
   
   public void growGdp(){
     gdp += (int) Math.floor(1 + Math.random()*(0.01*gdp));
     gdp -= (int) Math.floor(1 + Math.random()*(0.01*gdp));
+    
+    if(gdp < 0){
+      gdp = 0;
+    }
   }
   
   public void growSocial(){
