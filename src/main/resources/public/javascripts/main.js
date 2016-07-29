@@ -290,6 +290,7 @@ function addSprite(stage, data, scaleX, scaleY, startAni, name){
   sprite.scaleX = scaleX;
   sprite.scaleY = scaleY;
   sprite.gotoAndPlay(startAni);
+  sprite.stop();
 
   sprite.name = name;
   stage.addChild(sprite);
@@ -453,6 +454,7 @@ function initFlowerClock(){
 		};
 
 		addSprite(clockStage, data, 1, 1, "life", "flower");
+		clockStage.getChildByName("flower").stop();
 	};
 }
 
@@ -480,7 +482,7 @@ $( "#clock" ).click(function() {
 		$.post("/resumeTime", function(response) {
 			var year = JSON.parse(response);
 			console.log("Time resumed on " + year + ".");
-			clockStage.getChildByName("flower").play();
+			clockStage.getChildByName("flower").play("life");
 			playNationAnimations();
 		});
 	}
@@ -494,5 +496,3 @@ initFlowerClock();
 window.onload = function(){
 	passTime();
 };
-
-

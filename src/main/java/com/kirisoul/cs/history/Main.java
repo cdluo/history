@@ -26,7 +26,7 @@ import spark.template.freemarker.FreeMarkerEngine;
  */
 
 public class Main {
-  public static void main(String[] args) throws SQLException, ClassNotFoundException, URISyntaxException {
+  public static void main(String[] args) throws SQLException, ClassNotFoundException, URISyntaxException, InterruptedException {
     new Main(args).run();
   }
 
@@ -36,7 +36,7 @@ public class Main {
   private World world;
   private Time time;
   private Timer timer;
-  private static final int DELAY = 1000;
+  private static final int DELAY = 500;
   private static final int SECOND = 1000;
   
   private static final Gson GSON = new Gson();
@@ -45,7 +45,7 @@ public class Main {
     this.args = args;
   }
 
-  private void run() throws SQLException, ClassNotFoundException, URISyntaxException {
+  private void run() throws SQLException, ClassNotFoundException, URISyntaxException, InterruptedException {
     
     try{
       world = new World();
@@ -56,9 +56,14 @@ public class Main {
     
     sqlDB = new SQLQuery();
     
+    //Send the current status of the world only.
     timer = new Timer();
     time = new Time(world);
     timer.schedule(time, DELAY, SECOND);
+    
+    Thread.sleep(1000);
+    timer.cancel();
+    //
     
     Spark.staticFileLocation("/public");
     Spark.setPort(getHerokuAssignedPort());

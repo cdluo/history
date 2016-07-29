@@ -1,7 +1,7 @@
 <#assign content>
 
 <div id="header">
-  <h1> ${header}: </h1> <h1 id="year"> X </h1> <canvas id="clock" width = "50px" height = "50px" class = "running"> </canvas>
+  <h1> ${header}: </h1> <h1 id="year"> X </h1> <canvas id="clock" width = "50px" height = "50px" class = ""> </canvas>
 </div>
 
 <div id="events">
