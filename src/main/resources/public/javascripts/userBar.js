@@ -47,12 +47,12 @@ function controlWindow(button, buttonWindow, label){
 // Event DropDown Menus //
 //////////////////////////
 
-$( "#typeDropBtn" ).click(function() {
+$( "#typeLabel" ).click(function() {
 	var dropWindow = document.getElementById("typeDropDown");
 	dropDown(dropWindow);
 });
 
-$( "#nationDropBtn" ).click(function() {
+$( "#nationLabel" ).click(function() {
 	var dropWindow = document.getElementById("nationDropDown");
 	dropDown(dropWindow);
 });

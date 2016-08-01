@@ -112,7 +112,7 @@ function init(canvas, nation){
   header.y = 0;
   stage.addChild(header);
 
-  var name = new createjs.Text(nation.name, "24px Arial", "#000000");
+  var name = new createjs.Text(nation.name, "24px Garamond", "#000000");
 	name.x = 10;
 	name.y = 3;
 

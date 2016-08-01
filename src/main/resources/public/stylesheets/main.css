@@ -17,35 +17,47 @@ html, body{
 }
 
 h1{
+  position: relative;
+  top: -75px;
   font-family: Jacques;
-  font-size:48px;
-	display: inline-block;
+  font-size: 48px;
+  display: inline-block;
   margin: 0 0;
+  z-index: 1;
+  /* background: transparent; */
+  pointer-events: none;
 }
 
 #header{
-	display:block;
-	text-align:center;
+  display:block;
+  text-align:center;
+  height: 75px;
 }
 
 #year{
-	position: relative;
-	left: 12px;
+  position: relative;
+  left: 12px;
 }
 
 #clock{
-  position:relative;
-  top: -10px;
-  left: 25px;
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  width: 90px;
+  top: -20px;
+  /* left: 100px; */
   cursor:pointer;
+  z-index: 0;
 }
 
 #events{
+  /* position: relative; */
+  /* bottom: -30px; */
   display:block;
   margin:0 auto;
   text-align:center;
-  width:650px;
-  height: 75px;
+  width: 600px;
+  height: 50px;
   resize:none;
   box-shadow: 2px 2px 3px #000000;
   overflow-y:scroll;
@@ -59,8 +71,8 @@ h1{
 /* The actual messages that go into the event window */
 .mes{
   font-family:Jacques;
-  font-size:25px;
-  margin:20px 0;
+  font-size: 25px;
+  margin: 10px 0;
 }
 
 .black{
@@ -86,16 +98,16 @@ h1{
 /*----------------------*/
 
 canvas{
-	text-align:left;
+  text-align:left;
 }
 
 #canvasWorld{
-	position: relative;
+  position: relative;
   display: block;
-	top: 15px;
-	width: 1408px;
-  height: 425px;
-	margin: 0 auto;
+  top: 10px;
+  width: 1408px;
+  height: 480px;
+  margin: 0 auto;
   overflow-y: scroll;
   border: 2px solid black;
   border-radius:5px;
@@ -103,15 +115,16 @@ canvas{
 
 #userBar{
   position: fixed;
-  height: 75px;
-  width: 1410px;
+  height: 60px;
+  width: 1408px;
   border: 2px solid black;
-  bottom: 25px;
-  left: 10px;
+  bottom: 10px;
+  left: 14px;
   background-color: #275FA8;
   z-index:0;
   box-shadow: 2px 2px 2px black;
   border-radius:5px;
+  /* margin: 0 auto; */
 }
 
 .userBtn{
@@ -121,7 +134,7 @@ canvas{
   width:150px;
   font-family:"Garamond";
   font-size: 18px;
-  margin:12px 0;
+  margin: 5px 0;
   border: 1px solid black;
   border-radius:10px;
   box-shadow: 2px 2px 2px black;
@@ -142,8 +155,8 @@ canvas{
 }
 
 #addNationWindow{
-  height:275px;
-  top:125px;
+  height: 300px;
+  top: 100px;
 }
 
 .windowTopFiller{
@@ -152,8 +165,8 @@ canvas{
 
 .windowLabel{
   position:relative;
-  display:inline-block;
-  margin: 5px 0;
+  display: block;
+  margin: 20px 0;
   left: 20px;
   font-family:Garamond;
 }
@@ -161,7 +174,8 @@ canvas{
 .windowInput{
   position: absolute;
   margin: 5px 0;
-  width: 100px;
+  width: 125px;
+  top: 15px;
   right: 20px;
   font-family:Garamond;
 }
@@ -171,7 +185,7 @@ canvas{
   width: 100px;
   height:30px;
   left:125px;
-  bottom: 20px;
+  bottom: 15px;
   display:block;
   z-index:-1;
   font-family:Garamond;
@@ -195,18 +209,18 @@ canvas{
 .dropDown{
   position: absolute;
   visibility:hidden;
-  left: 20px;
-  width:200px;
+  right: 20px;
+  width: 200px;
   box-shadow: 2px 2px 2px black;
   overflow-y:scroll;
   height:100px;
   z-index:3;
-  border-radius:5px;
+  border-radius: 3px;
   background-color:white;
 }
 
 #typeDropDown{
-  top: 52px;
+  top: 45px;
 }
 
 .typeRadio{
@@ -223,7 +237,7 @@ canvas{
 }
 
 #nationDropDown{
-  top: 160px;
+  top: 141px;
 }
 
 .toRadio{
@@ -241,16 +255,20 @@ canvas{
 
 #typeLabel{
   position: absolute;
-  width: 150px;
-  left: 200px;
-  top: 0px;
+  width: 200px;
+  right: 20px;
+  top: 0;
+  cursor: pointer;
+  font-family: "Garamond";
 }
 
 #nationLabel{
   position:absolute;
-  width: 150px;
-  left: 200px;
-  top: 105px;
+  width: 200px;
+  right: 20px;
+  top: 97px;
+  cursor: pointer;
+  font-family: "Garamond";
 }
 
 #newEventSubmit{
