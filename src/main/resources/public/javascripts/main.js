@@ -1,7 +1,7 @@
 // Reflections: 
 
-// -Must add canvas element to doc itself before referencing it! Duh! (No sense of object until it physically exists)
-// -Only set the ticker on instantiation. Basically, a lot of it is like Java! (More than you would think at first)
+// -Must add canvas element to doc itself before referencing it! Duh! (No sense of object until it literally exists)
+// -Only set the ticker on instantiation. Basically, a lot of createJS is like Java! (More than you would think at first)
 // -If a dumb thing is taking a long time, it's probably something wrong with your assumptions.
 
 'use strict';
@@ -45,7 +45,7 @@ function passTime(){
 	});
 
 	if(timeRunning){
-		timeout = setTimeout(passTime,1000);	//Should match timer.schedule in Main on the backend.
+		timeout = setTimeout(passTime, 2000);	//Should match TIMESPEED constant in Main on the backend.
 	}
 }
 
@@ -93,9 +93,9 @@ function init(canvas, nation){
 
 	createjs.Ticker.on("tick", handleTick);
   createjs.Ticker.framerate = 30;
-    function handleTick(event) {
-        stage.update(event);
-    }
+  function handleTick(event) {
+      stage.update(event);
+  }
 
   //////////
   // Name //
@@ -472,6 +472,9 @@ $( "#clock" ).click(function() {
 			var year = JSON.parse(response);
 			console.log("Time stopped on " + year + ".");
 			clockStage.getChildByName("flower").stop();
+		});
+
+		$(document).ajaxStop(function() {
 			pauseNationAnimations();
 		});
 	}else{
@@ -483,6 +486,9 @@ $( "#clock" ).click(function() {
 			var year = JSON.parse(response);
 			console.log("Time resumed on " + year + ".");
 			clockStage.getChildByName("flower").play("life");
+		});
+
+		$(document).ajaxStop(function() {
 			playNationAnimations();
 		});
 	}

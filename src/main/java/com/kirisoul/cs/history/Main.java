@@ -37,7 +37,7 @@ public class Main {
   private Time time;
   private Timer timer;
   private static final int DELAY = 500;
-  private static final int SECOND = 1000;
+  private static final int TIMESPEED = 2000;
   
   private static final Gson GSON = new Gson();
 
@@ -56,24 +56,22 @@ public class Main {
     
     sqlDB = new SQLQuery();
     
-    //Send the current status of the world only.
-    timer = new Timer();
-    time = new Time(world);
-    timer.schedule(time, DELAY, SECOND);
-    
-    Thread.sleep(1000);
-    timer.cancel();
-    //
-    
     Spark.staticFileLocation("/public");
     Spark.setPort(getHerokuAssignedPort());
     
+    Spark.get("/start", (request, response) -> {
+      Map<String, Object> variables =
+        ImmutableMap.of("title", "TTNW");
+      return new ModelAndView(variables, "start.ftl");
+    }, new FreeMarkerEngine());
+    
     Spark.get("/home", (request, response) -> {
       Map<String, Object> variables =
-        ImmutableMap.of("title", "History", "header", "Earth");
+        ImmutableMap.of("title", "TTNW", "header", "Earth");
       return new ModelAndView(variables, "query.ftl");
     }, new FreeMarkerEngine());
     
+//    Spark.post("/home", new MainHandler());
     Spark.post("/time", new TimeHandler());
     Spark.post("/timeline", new TimelineHandler());
     Spark.post("/year", new YearHandler());
@@ -94,6 +92,20 @@ public class Main {
         return Integer.parseInt(processBuilder.environment().get("PORT"));
     }
     return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
+  }
+  
+  /**
+   * Sends the nations list to the front end for time updates.
+   * 
+   * @author ChrisLuo
+   */
+  private class MainHandler implements Route {
+    @Override
+    public Object handle(Request req, Response res) {
+      Map<String, Object> variables =
+          ImmutableMap.of("title", "TTNW", "header", "Earth");
+        return new ModelAndView(variables, "query.ftl");
+    }
   }
   
   /**
@@ -211,7 +223,7 @@ public class Main {
     public Object handle(Request req, Response res) {
       timer = new Timer();
       time = new Time(world);
-      timer.schedule(time, DELAY, SECOND);
+      timer.schedule(time, DELAY, TIMESPEED);
       
       return GSON.toJson(world.getYear());
     }

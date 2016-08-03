@@ -11,7 +11,6 @@ import java.util.List;
 
 import com.kirisoul.cs.history.events.EconomicBoom;
 import com.kirisoul.cs.history.events.EconomicDownturn;
-import com.kirisoul.cs.history.events.Election;
 import com.kirisoul.cs.history.events.Event;
 import com.kirisoul.cs.history.events.NaturalDisaster;
 
@@ -421,9 +420,6 @@ public class SQLQuery {
    
    if(name.equals("Natural Disaster")){
      e = new NaturalDisaster(year, to);
-   }
-   else if(name.equals("Election")){
-     e = new Election(year, to);
    }
    else if(name.equals("Economic Downturn")){
      e = new EconomicDownturn(year, to);

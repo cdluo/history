@@ -3,6 +3,9 @@
     <meta charset="utf-8">
     <title>${title}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="shortcut icon" href="images/icon.png"/>
+
     <link rel="stylesheet" href="stylesheets/normalize.css">
     <link rel="stylesheet" href="stylesheets/html5bp.css">
     <link rel="stylesheet" href="stylesheets/main.css">

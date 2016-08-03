@@ -19,7 +19,6 @@ import com.kirisoul.cs.history.database.SQLQuery;
  *    -Governmental
  *    
  * (Minor)
- * -Election (DONE)
  * -Economic Downturn (DONE)
  * -Economic Boom (DONE)
  *    
@@ -67,7 +66,7 @@ public class EventGenerator {
     if(type > 95){
       newEvent = new NaturalDisaster(year, to);
     }else if(type > 67){
-      newEvent = new Election(year, to);
+      newEvent = new NaturalDisaster(year, to);
     }else if(type > 33){
       newEvent = new EconomicDownturn(year, to);
     }else{

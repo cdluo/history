@@ -28,7 +28,7 @@ $( "#stats" ).click(function() {
   var button = document.getElementById("stats");
   var buttonWindow = document.getElementById("statsWindow")
 
-  controlWindow(button, buttonWindow, "Stats");
+  controlWindow(button, buttonWindow, "Help");
 });
 
 function controlWindow(button, buttonWindow, label){

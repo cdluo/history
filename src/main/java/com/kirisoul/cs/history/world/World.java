@@ -50,7 +50,7 @@ public class World {
     nations = buildNations();
     eventGen = new EventGenerator(query);
     curEvents = null;
-    year = -1;
+    year = query.getYear();
   }
   
   /**
