@@ -68,7 +68,7 @@
     <div style = "width:350px; height:10px"></div> 
     <img src="images/singleFrames/FF6Person.png" class="helpImg" style="margin-left:25px; width:40px; height:50px"> <p class="helpText"> = Population</p>
 
-    <img src="images/singleFrames/dollar.png" class="helpImg" style="width:75px; height:30px"> <p class="helpText"> = GDP</p>
+    <img src="images/singleFrames/dollar.png" class="helpImg" style="width:75px; height:30px"> <p class="helpText"> = GDP (Millions)</p>
 
     <img src="images/singleFrames/Social1.png" class="helpImg" style="margin-left:13px; width:60px; height:50px"> <p class="helpText" style = "margin-right:50px"> = Social Stability (X/100)</p>
 

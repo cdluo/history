@@ -60,7 +60,7 @@ public class World {
    * @param pop of the nation
    * @throws SQLException exception
    */
-  public void addNation(String name, int gdp, int pop, int social, int living) throws SQLException{
+  public void addNation(String name, int pop, int gdp, int social, int living) throws SQLException{
     query.addNation(name, pop, gdp, social, living);
     Nation added = new Nation(name, pop, gdp, social, living);
     nations.put(name, added);
